@@ -9,5 +9,7 @@ class Survey(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
+    def is_owner(self, user):
+       return self.owner == user 
     def __str__(self) -> str:
         return self.title

@@ -1,0 +1,12 @@
+{% for poll in polls %}
+<li class="list-group-item">
+    <a href="{% url 'polls:detail' poll.pk %}">{{ poll.poll_text }}</a>
+    
+    {% if request.user == poll.survey.owner %}
+    {% if poll.survey.active %}
+    <a class="btn btn-primary float-right mt-5" href="{% url 'polls:edit_poll' poll.pk %}" role="button">Edit Poll</a>
+    {% endif %}
+    {% endif %}
+
+</li>
+{% endfor %}

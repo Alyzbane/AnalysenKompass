@@ -7,6 +7,8 @@ from polls.forms import PollAddForm, ChoiceAddForm
 from polls.models import Poll, Choice, Vote
 from surveys.models import Survey
 
+
+
 @login_required()
 def polls_add(request, survey_id):
     survey = get_object_or_404(Survey, pk=survey_id) 

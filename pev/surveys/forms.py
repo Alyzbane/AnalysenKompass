@@ -7,11 +7,10 @@ class SurveyAddForm(forms.ModelForm):
 
     class Meta:
         model = Survey
-        fields = ['title', 'description']
+        fields = ['title', 'description', 'active']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.TextInput(attrs={'class': 'form-control',
                                           'rows': 5,
                                           'cols': 20}),
-
         }

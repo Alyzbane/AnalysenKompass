@@ -3,18 +3,8 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <h1 class="text-center mb-5">Survey Index</h1>
-            
-           
-
-{% extends 'base.html' %}
-
-{% block content %}
-<div class="container">
-    <div class="row">
         <div class="col-md-8 offset-sm-2">
-            <h1 class="text-center mb-5">Welcome to Surveys List!</h1>
+            <h1 class="text-center mb-5">Welcome to Personal Evaluation System!</h1>
             {% if messages %}
             <div class="messages">
                 {% for message in messages %}
@@ -33,7 +23,7 @@
             <a class="btn btn-{% if 'created_at' in request.GET %}warning{% else %}primary{% endif %} mb-3" href="?created_at=True"
                 role="button"><i class="far fa-clock"></i> Created At</a>
 
-            <a class="btn btn-primary mb-3 float-right" href="{% url 'surveys:add' %}" role="button">Add <i class="fas fa-plus"></i></a>
+            <a class="btn btn-primary mb-3 float-right" href="{% url 'surveys:survey_create' %}" role="button">Add <i class="fas fa-plus"></i></a>
 
             <form class="form-inline">
                 <div class="form-group mr-sm-2 mb-2">
@@ -45,17 +35,17 @@
 
             <ul class="list-group">
                 {% for survey in surveys %}
-                <li class="list-group-item"><a href="{% url 'surveys:detail' survey.id %}">{{ survey.title|truncatewords:5 }}
+                <li class="list-group-item"><a href="{% url 'surveys:survey_detail' survey.id %}">{{ survey.title|truncatewords:5 }}
                         {% if not survey.active%}
                         <i class="fas fa-check-circle ml-2"></i>
                         {% endif %}
                     </a>
                     {% if request.user == survey.owner %}
                     {% if survey.active %}
-                    <a href="{% url 'surveys:end_survey' survey.id %}" data-toggle="tooltip" data-placement="top" title="End Survey"
-                        onclick="return confirm('Are you sure ?')"><i class="fas fa-step-forward float-right btn btn-danger btn-sm"></i></a>
+                    <a href="{% url 'surveys:survey_end' survey.id %}" data-toggle="tooltip" data-placement="top" title="End Survey"
+                        onclick="return confirm('End this survey?')"><i class="fas fa-step-forward float-right btn btn-danger btn-sm"></i></a>
                     {% endif %}
-                    <a href="{% url 'surveys:edit' survey.id %}" class="mr-3" data-toggle="tooltip" data-placement="top"
+                    <a href="{% url 'surveys:survey_edit' survey.id %}" class="mr-3" data-toggle="tooltip" data-placement="top"
                         title="Edit Survey"><i class="fas fa-pencil-alt float-right btn btn-primary btn-sm mr-1"></i></a>
                     {% endif %}
                 </li>

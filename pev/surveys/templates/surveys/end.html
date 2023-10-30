@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<ul>
+    <div class="form-container">
+    <h2> {{ survey.title }} </h2>
+    <p> {{ survey.description }} </p>
+    {% for poll in polls%}
+    <p> {{ poll.poll_text }} </p>
+    <li> {{ poll.choice_set.get_vote_count }} </li>
+    {% endfor %}
+    </div>
+</ul>
+{% endblock %}
