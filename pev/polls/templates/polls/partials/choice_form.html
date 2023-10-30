@@ -1,2 +1,16 @@
 <!-- choice_form.html -->
-{{ choice_form.as_p }}
+
+<form>
+   {% csrf_token %}
+   <div class="form-row align-items-center">
+      <div class="col-6 col-md-4">
+         <label for="{{ choice_form.choice_text.id_for_label }}">
+            {{ choice_form.choice_text.label_tag }}
+         </label>
+      </div>
+      <div class="col-4 col-md-6">
+         {{ choice_form.choice_text }}
+      </div>
+
+   </div>
+</form>

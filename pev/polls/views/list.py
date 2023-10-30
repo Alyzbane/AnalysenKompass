@@ -9,7 +9,7 @@ def polls_list(request):
     all_polls = Poll.objects.all()
     search_term = ''
     if 'name' in request.GET:
-        all_polls = all_polls.order_by('text')
+        all_polls = all_polls.order_by('poll_text')
 
     if 'date' in request.GET:
         all_polls = all_polls.order_by('pub_date')

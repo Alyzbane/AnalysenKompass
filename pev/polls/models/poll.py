@@ -1,15 +1,14 @@
 import secrets
 
 from django.db import models
-from django.contrib.auth.models import User
 from django.utils import timezone
 
+from surveys.models import Survey
 
 class Poll(models.Model):
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    survey = models.ForeignKey(Survey, on_delete=models.CASCADE) 
     poll_text = models.TextField(max_length=255)
     pub_date = models.DateTimeField(default=timezone.now)
-    active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def user_can_vote(self, user):

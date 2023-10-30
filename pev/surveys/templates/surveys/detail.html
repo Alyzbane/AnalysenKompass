@@ -1,0 +1,25 @@
+<!--detail.html-->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1 class="text-center mb-5">Survey: {{ survey.title }}</h1>
+            
+            <h2>List of Polls in this Survey</h2>
+            <ul class="list-group">
+                {% for poll in polls %}
+                <li class="list-group-item">
+                    <a href="{% url 'polls:detail' poll.pk %}">{{ poll.poll_text }}</a>
+                    <a class="btn btn-primary float-right mt-5" href="{% url 'polls:edit_poll' poll.pk %}" role="button">Edit Poll</a>
+                </li>
+                {% endfor %}
+            </ul>
+            
+            <a class="btn btn-primary mt-3" href="{% url 'polls:add_poll' survey.pk %}" role="button">Create Poll</a>
+            <a class="btn btn-warning mt-3" href="{% url 'surveys:survey_index' %}" role="button">Back to Survey Index</a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

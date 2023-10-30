@@ -1,41 +1,27 @@
 {% extends 'base.html' %}
-
+<!-- add_poll.html -->
 {% block content %}
-
 <div class="container">
-    <div class="row center">
-        <div class="col-md-6 offset-md-3">
-            <h2>Create new poll</h2>
-            {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-            <form method="POST" hx-post="{% url 'polls:add' %}" >
-              {% csrf_token %}
-              {{ form.as_p }}
-              {{ formset.management_form }}
-
-              <div id="formset-container">
-              {% for choice_form in formset %}
-              <div class="choice-form" id="choice-forms">
-                {{ choice_form.as_p }}
-              </div>
-
-              {% endfor %}
-                <button type="button" class="btn btn-primary"
-                        id="add-choice-button"
-                        hx-get="{% url 'polls:add_choice_form' %}"
-                        hx-target="#choice-forms"
-                        hx-swap="beforeend">Add Choice</button>
+   <div class="row center">
+      <div class="col-md-6 offset-md-3">
+         <h2>Create new poll</h2>
+         {% if messages %}
+         <ul class="messages">
+            {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+            {% endfor %}
+         </ul>
+         {% endif %}
+         <div id='form-container'>
+            <form action="{% url 'polls:add_poll' survey.pk %}" method="POST">
+               {% csrf_token %}
+               <div id='poll-text'>
+                  {{ form.as_p }}
+               </div>
                 <button type="submit" class="btn btn-primary">Add Poll</button>
-                <a class="btn btn-warning" href="{% url 'polls:list' %}" role="button">Back</a>
-              </div>
-            </form> 
-
-        </div>
-    </div>
+                <a class="btn btn-warning" href="{% url 'surveys:survey_detail' survey.pk %}" role="button">Back</a> 
+         </div>
+      </div>
+   </div>
 </div>
 {% endblock %}

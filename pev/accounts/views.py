@@ -66,3 +66,4 @@ def create_user(request):
     else:
         form = UserRegistrationForm()
     return render(request, 'accounts/register.html', {'form': form})
+

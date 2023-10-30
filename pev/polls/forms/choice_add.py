@@ -11,5 +11,3 @@ class ChoiceAddForm(forms.ModelForm):
         widgets = {
             'choice_text': forms.TextInput(attrs={'class': 'form-control', })
         }
-
-ChoiceAddFormSet = formset_factory(ChoiceAddForm, extra=1, max_num=5, can_delete=True)

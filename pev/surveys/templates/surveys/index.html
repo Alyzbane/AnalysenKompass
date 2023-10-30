@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1 class="text-center mb-5">Survey Index</h1>
+            
+           
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-sm-2">
+            <h1 class="text-center mb-5">Welcome to Surveys List!</h1>
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <a class="btn btn-{% if 'title' in request.GET %}warning{% else %}primary{% endif %} mb-3" href="?title=True"
+                role="button"><i class="fas fa-sort-alpha-down"></i>
+                Title</a>
+            <a class="btn btn-{% if 'created_at' in request.GET %}warning{% else %}primary{% endif %} mb-3" href="?created_at=True"
+                role="button"><i class="far fa-clock"></i> Created At</a>
+
+            <a class="btn btn-primary mb-3 float-right" href="{% url 'surveys:add' %}" role="button">Add <i class="fas fa-plus"></i></a>
+
+            <form class="form-inline">
+                <div class="form-group mr-sm-2 mb-2">
+                    <input type="search" class="form-control" name="search" placeholder="Search" value={{ search_term }}>
+                </div>
+                <button type="submit" class="btn btn-primary mb-2"><i class="fas fa-search"></i></button>
+            </form>
+
+
+            <ul class="list-group">
+                {% for survey in surveys %}
+                <li class="list-group-item"><a href="{% url 'surveys:detail' survey.id %}">{{ survey.title|truncatewords:5 }}
+                        {% if not survey.active%}
+                        <i class="fas fa-check-circle ml-2"></i>
+                        {% endif %}
+                    </a>
+                    {% if request.user == survey.owner %}
+                    {% if survey.active %}
+                    <a href="{% url 'surveys:end_survey' survey.id %}" data-toggle="tooltip" data-placement="top" title="End Survey"
+                        onclick="return confirm('Are you sure ?')"><i class="fas fa-step-forward float-right btn btn-danger btn-sm"></i></a>
+                    {% endif %}
+                    <a href="{% url 'surveys:edit' survey.id %}" class="mr-3" data-toggle="tooltip" data-placement="top"
+                        title="Edit Survey"><i class="fas fa-pencil-alt float-right btn btn-primary btn-sm mr-1"></i></a>
+                    {% endif %}
+                </li>
+
+                {% endfor %}
+            </ul>
+            {% if surveys.paginator.num_pages > 1 %}
+            <nav class="mt-3">
+                <ul class="pagination">
+                    {% if surveys.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page=1&{{ params }}">First</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ surveys.previous_page_number }}&{{ params }}">Previous</a></li>
+                    {% endif %}
+
+                    <li class="page-item active"><a class="page-link" href="">{{ surveys.number }}</a></li>
+
+                    {% if surveys.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ surveys.next_page_number }}&{{ params }}">Next</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ surveys.paginator.num_pages }}&{{ params }}">Last</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock content %}
