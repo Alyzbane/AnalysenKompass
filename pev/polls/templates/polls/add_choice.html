@@ -1,17 +1,22 @@
+<!--add_choice.html-->
 {% extends 'base.html' %}
 {% block content %}
+<div 
 <div id='choice-forms'>
     {% include 'polls/partials/choice_form.html' %}
 </div>
-<button type="button" class="btn btn-danger"
-    hx-get="{% url 'polls:add_choice' poll.pk %}"
-    hx-target="#choice-forms"
-    hx-swap="beforeend">- Remove Choice</button>
-<button type="button" class="btn btn-success me-2"
-    hx-get="{% url 'polls:add_choice' poll.pk %}"
-    hx-target="#choice-forms"
-    hx-swap="beforeend">+ Add Choice</button>
-<br>
 
-<button class="btn btn-primary" type="submit" action="">Submit All</button>
+<br>
+<hr>
+
+  <button type="button" class="btn btn-success me-2 align-self-end"
+    hx-get="{% url 'polls:protocol_choice' poll.id %}"
+    hx-target="#choice-forms"
+    hx-swap="beforeend"><</button>
+  <button type="button" class="btn btn-success me-2 align-self-end"
+    hx-get="{% url 'polls:protocol_choice' poll.id %}"
+    hx-target="#choice-forms"
+    hx-swap="beforeend">></button>
+
+
 {% endblock %}

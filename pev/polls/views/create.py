@@ -6,10 +6,12 @@ from django.http import HttpResponseForbidden
 from polls.forms import PollAddForm, ChoiceAddForm
 from polls.models import Poll, Choice, Vote
 from surveys.models import Survey
+from common.utils.decorators import require_owner
 
 
 
 @login_required()
+@require_owner(Survey, 'survey_id')
 def polls_add(request, survey_id):
     survey = get_object_or_404(Survey, pk=survey_id) 
     
@@ -39,6 +41,17 @@ def polls_add(request, survey_id):
 
 @login_required
 def create_choice(request, poll_id):
+   choice_form = ChoiceAddForm(prefix="choice")
+   poll = get_object_or_404(Poll, pk=poll_id)
+
+   context = {
+            'choice_form': choice_form,
+            'poll': poll,
+   }
+   return render(request, 'polls/add_choice.html', context)
+
+@login_required
+def choice_protocol(request, poll_id):
     poll = get_object_or_404(Poll, pk=poll_id)
 
     if request.method == "POST":
@@ -56,9 +69,8 @@ def create_choice(request, poll_id):
     else:
         choice_form = ChoiceAddForm(prefix="choice")
 
-    context = {
-        'choice_form': choice_form,
-        'poll': poll,
-    }
-
-    return render(request, 'polls/add_choice.html', context)
+        context = {
+            'choice_form': choice_form,
+            'poll': poll,
+        }
+        return render(request, 'polls/partials/choice_form.html', context)
