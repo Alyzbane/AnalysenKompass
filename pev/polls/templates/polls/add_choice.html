@@ -1,22 +1,36 @@
 <!--add_choice.html-->
 {% extends 'base.html' %}
 {% block content %}
-<div 
+
+
+<div class="container-fluid">
+<div class="col-6 col-md-4">
+<p>{{ poll.poll_text }}</p>
+</div>
+</div>
 <div id='choice-forms'>
     {% include 'polls/partials/choice_form.html' %}
 </div>
 
 <br>
 <hr>
-
+<div class="container-fluid">
+<div class="form-row align-items-center">
+  <div>
   <button type="button" class="btn btn-success me-2 align-self-end"
     hx-get="{% url 'polls:protocol_choice' poll.id %}"
     hx-target="#choice-forms"
-    hx-swap="beforeend"><</button>
+    hx-swap="beforeend">-</button>
+  </div>
+    <div>
   <button type="button" class="btn btn-success me-2 align-self-end"
     hx-get="{% url 'polls:protocol_choice' poll.id %}"
     hx-target="#choice-forms"
-    hx-swap="beforeend">></button>
+    hx-swap="beforeend">+</button>
+    </div>
 
+   <button type="submit" class="btn btn-primary me-2 align-self-end" id="submit-all">Submit</button>
+</div>
+</div>
 
 {% endblock %}

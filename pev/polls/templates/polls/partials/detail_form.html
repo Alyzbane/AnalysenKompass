@@ -1,3 +1,4 @@
+<!--detail_form.html-->
 {% for poll in polls %}
 <li class="list-group-item">
     <a href="{% url 'polls:detail' poll.pk %}">{{ poll.poll_text }}</a>

@@ -1,17 +1,18 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import HttpResponseForbidden
+from common.utils.decorators import require_owner
 
 from polls.forms import PollAddForm, ChoiceAddForm, PollEditForm
 from polls.models import Poll, Choice, Vote
+from surveys.models import Survey
+
 
 @login_required
+@require_owner(Poll, 'poll_id')
 def polls_edit(request, poll_id):
     poll = get_object_or_404(Poll, pk=poll_id)
-    if request.user != poll.survey.owner:
-        return redirect('home')
-
+     
     if request.method == 'POST':
         form = PollEditForm(request.POST, instance=poll)
         if form.is_valid:

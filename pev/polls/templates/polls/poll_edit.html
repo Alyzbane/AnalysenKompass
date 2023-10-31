@@ -35,10 +35,7 @@
                 <h2 class="text-center mt-3">Choices</h2>
                 <hr>
                 <ul class="list-group">
-                    {% for choice in poll.choice_set.all %}
-                    <li class="list-group-item"><a href="{% url 'polls:choice_edit' choice.id %}"><i class="fas fa-pencil-alt"></i></a>&nbsp
-                        {{ choice.choice_text }}</li>
-                    {% endfor %}
+                  
                 </ul>
             </div>
         </div>

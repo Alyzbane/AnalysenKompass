@@ -1,16 +1,18 @@
 <!-- choice_form.html -->
 
-<form  hx-post="{% url 'polls:protocol_choice' poll.id %}">
+<form  hx-post="{% url 'polls:protocol_choice' poll.id %}" 
+       hx-swap="beforeend" 
+       hx-on="htmx:afterRequest: this.remove()"
+       hx-trigger="click from:#submit-all">
    {% csrf_token %}
-   <div class="form-row align-items-center">
+   <div class="container-fluid">
       <div class="col-6 col-md-4">
          <label for="{{ choice_form.choice_text.id_for_label }}">
             {{ choice_form.choice_text.label_tag }}
          </label>
       </div>
-      <div class="col-4 col-md-6">
+      <div class="col-10">
          {{ choice_form.choice_text }}
       </div>
-   <button type="submit" class="btn btn-primary me-2 align-self-end" >Submit</button>
    </div>
 </form>

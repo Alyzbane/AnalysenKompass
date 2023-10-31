@@ -8,10 +8,11 @@ class Choice(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def is_owner(self, user):
+        return self.poll.survey.owner == user
     @property
     def get_vote_count(self):
         return self.vote_set.count()
 
     def __str__(self):
         return f"{self.poll.poll_text[:25]} - {self.choice_text[:25]}"
-

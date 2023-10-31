@@ -11,6 +11,8 @@ class Poll(models.Model):
     pub_date = models.DateTimeField(default=timezone.now)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def is_owner(self, user):
+        return self.survey.owner == user
     def user_can_vote(self, user):
         """ 
         Return False if user already voted

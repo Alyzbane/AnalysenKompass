@@ -9,50 +9,53 @@ from surveys.models import Survey
 from common.utils.decorators import require_owner
 
 
-
 @login_required()
 @require_owner(Survey, 'survey_id')
 def polls_add(request, survey_id):
-    survey = get_object_or_404(Survey, pk=survey_id) 
-    
-    if request.user.has_perm('polls.add_poll'):
-        if request.method == 'POST':
-            form = PollAddForm(request.POST)
+    survey = get_object_or_404(Survey, pk=survey_id)
 
-            if form.is_valid():
-                poll = form.save(commit=False)
-                poll.survey = survey
-                poll.save()
+    if request.method == 'POST':
+        form = PollAddForm(request.POST)
 
-                messages.success(
-                    request, "Poll added successfully.", extra_tags='alert alert-success alert-dismissible fade show')
-                return redirect('polls:add_choice', poll.id)
-        else:
-            form = PollAddForm()
-          
-        context = {
-            'form': form,
-            'survey': survey,
-        }
+        if form.is_valid():
+            poll = form.save(commit=False)
+            poll.survey = survey
+            poll.save()
 
-        return render(request, 'polls/add_poll.html', context)
+            messages.success(
+                request, "Poll added successfully.",
+                extra_tags='alert alert-success alert-dismissible fade show')
+            return redirect('polls:add_choice', poll.id)
     else:
-        return HttpResponseForbidden("Sorry but you don't have permission to do that!")
+        form = PollAddForm()
+
+    context = {
+        'form': form,
+        'survey': survey,
+    }
+
+    return render(request, 'polls/add_poll.html', context)
+
+
 
 @login_required
+@require_owner(Poll, 'poll_id')
 def create_choice(request, poll_id):
-   choice_form = ChoiceAddForm(prefix="choice")
-   poll = get_object_or_404(Poll, pk=poll_id)
+    choice_form = ChoiceAddForm(prefix="choice")
+    poll = get_object_or_404(Poll, pk=poll_id)
+    context = {
+        'choice_form': choice_form,
+             'poll': poll,
+    }
 
-   context = {
-            'choice_form': choice_form,
-            'poll': poll,
-   }
-   return render(request, 'polls/add_choice.html', context)
+    return render(request, 'polls/add_choice.html', context)
+
 
 @login_required
+@require_owner(Poll, 'poll_id')
 def choice_protocol(request, poll_id):
     poll = get_object_or_404(Poll, pk=poll_id)
+    choice_form = ChoiceAddForm(prefix="choice")
 
     if request.method == "POST":
         choice_form = ChoiceAddForm(request.POST, prefix="choice")
@@ -63,14 +66,13 @@ def choice_protocol(request, poll_id):
             choice.save()
 
             messages.success(
-                request, "Choice added successfully.", extra_tags='alert alert-success alert-dismissible fade show')
+                request, "Choice added successfully.",
+                extra_tags='alert alert-success alert-dismissible fade show')
             return redirect('polls:detail', poll_id=poll.id)
 
-    else:
-        choice_form = ChoiceAddForm(prefix="choice")
-
-        context = {
-            'choice_form': choice_form,
+    context = {
+        'choice_form': choice_form,
             'poll': poll,
-        }
-        return render(request, 'polls/partials/choice_form.html', context)
+    }
+
+    return render(request, 'polls/partials/choice_form.html', context)
