@@ -1,0 +1,24 @@
+<div class="row">
+  <div class="col-4">
+    <button type="submit" class="btn btn-outline-light me-2 float-left" id="next"><</button>
+  </div>
+  <div class="col-4 text-middle">
+    <h3 class="text-middle">... Page {{ polls_page.number }}...</h3>
+  </div>
+  <div class="col-4">
+    <button type="submit" class="btn btn-outline-danger me-2 float-right" id="prev">></button>
+  </div>
+</div>
+
+<form method="POST" action="{% url 'polls:protocol_choice' poll.pk %}">
+    <div class="container-fluid">
+        {% csrf_token %}
+        {% for choice in poll.choice_set.all %}
+        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+        <br>
+        {% endfor %}
+        <input type="submit" value="Vote" class="btn btn-primary mt-3">
+        <a class="btn btn-warning mt-3" href="{% url 'surveys:survey_detail' poll.survey.pk %}" role="button">Cancel</a>
+    </div>
+</form>
