@@ -1,0 +1,5 @@
+/* Add this CSS to your stylesheet */
+.alert.alert-success.fade {
+    opacity: 1;
+    transition: opacity 2s ease-in-out;
+}

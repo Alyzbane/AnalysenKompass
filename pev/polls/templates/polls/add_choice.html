@@ -1,36 +1,29 @@
 <!--add_choice.html-->
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 
+<div class="col">
+    <legend>{{ poll.poll_text }}</legend>
+    <div class="form-row align-items-center col-md-6 offset-md-3">
+        <strong class="mr-3"> Choices: </strong>
+ 
+        <button type="button" class="btn btn-success mr-2 btn-sm" 
+                hx-get="{% url 'polls:protocol_choice' poll.id %}" 
+                hx-target="#choice-forms" 
+                hx-swap="beforeend">+</button>
+    </div>
+</div>
 
-<div class="container-fluid">
-<div class="col-6 col-md-4">
-<p>{{ poll.poll_text }}</p>
-</div>
-</div>
-<div id='choice-forms'>
+<div id="choice-forms">
     {% include 'polls/partials/choice_form.html' %}
 </div>
 
-<br>
-<hr>
+<br />
+<hr />
 <div class="container-fluid">
-<div class="form-row align-items-center">
-  <div>
-  <button type="button" class="btn btn-success me-2 align-self-end"
-    hx-get="{% url 'polls:protocol_choice' poll.id %}"
-    hx-target="#choice-forms"
-    hx-swap="beforeend">-</button>
-  </div>
-    <div>
-  <button type="button" class="btn btn-success me-2 align-self-end"
-    hx-get="{% url 'polls:protocol_choice' poll.id %}"
-    hx-target="#choice-forms"
-    hx-swap="beforeend">+</button>
+    <div class="form-row align-items-center">
+        <button type="submit" class="btn btn-primary mr-2" id="submit-all">Submit</button>
+        <a role="button" class="btn btn-warning mr-2" href="{% url 'polls:edit_poll' poll.id %}">Back</a>
     </div>
-
-   <button type="submit" class="btn btn-primary me-2 align-self-end" id="submit-all">Submit</button>
-</div>
 </div>
 
 {% endblock %}

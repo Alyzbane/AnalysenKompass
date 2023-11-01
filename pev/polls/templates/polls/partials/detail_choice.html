@@ -1,0 +1,12 @@
+<form hx-post="{% url 'polls:protocol_vote' poll.id %}"
+      hx-trigger="click from:#submit-vote"
+      hx-target="#form-choices">
+    <div class="container-fluid">
+        {% csrf_token %}
+        {% for choice in poll.choice_set.all %}
+        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+        <br>
+        {% endfor %}
+        </div>
+</form>

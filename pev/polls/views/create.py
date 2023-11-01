@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import HttpResponseForbidden
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.http import HttpResponse
 
 from polls.forms import PollAddForm, ChoiceAddForm
-from polls.models import Poll, Choice, Vote
+from polls.models import Poll
 from surveys.models import Survey
 from common.utils.decorators import require_owner
 
@@ -43,7 +42,8 @@ def create_choice(request, poll_id):
     poll = get_object_or_404(Poll, pk=poll_id)
     context = {
         'choice_form': choice_form,
-             'poll': poll,
+        'poll': poll,
+        'choices': poll.choice_set.all(),
     }
 
     return render(request, 'polls/add_choice.html', context)
@@ -66,11 +66,9 @@ def choice_protocol(request, poll_id):
             messages.success(
                 request, "Choice added successfully.",
                 extra_tags='alert alert-success alert-dismissible fade show')
-            return redirect('polls:detail', poll_id=poll.id)
-
     context = {
         'choice_form': choice_form,
-            'poll': poll,
+        'poll': poll,
     }
 
     return render(request, 'polls/partials/choice_form.html', context)

@@ -1,7 +1,6 @@
-<!--detail_form.html-->
 {% for poll in polls %}
 <li class="list-group-item">
-    <a href="{% url 'polls:detail' poll.pk %}">{{ poll.poll_text }}</a>
+    <a href="{% url 'polls:add_vote' poll.pk %}">{{ poll.poll_text }}</a>
     
     {% if request.user == poll.survey.owner %}
     {% if poll.survey.active %}

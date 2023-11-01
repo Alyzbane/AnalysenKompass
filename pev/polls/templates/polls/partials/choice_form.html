@@ -1,18 +1,21 @@
 <!-- choice_form.html -->
-
-<form  hx-post="{% url 'polls:protocol_choice' poll.id %}" 
-       hx-swap="beforeend" 
-       hx-on="htmx:afterRequest: this.remove()"
-       hx-trigger="click from:#submit-all">
+<form hx-post="{% url 'polls:protocol_choice' poll.id %}" hx-swap="beforeend" hx-on="htmx:afterRequest: this.remove()" hx-trigger="click from:#submit-all">
    {% csrf_token %}
    <div class="container-fluid">
-      <div class="col-6 col-md-4">
-         <label for="{{ choice_form.choice_text.id_for_label }}">
-            {{ choice_form.choice_text.label_tag }}
-         </label>
+       <div class="row col-4 col-md-3">
+           <label for="{{ choice_form.choice_text.id_for_label }}">
+               {{ choice_form.choice_text.label_tag }}
+           </label>
+       </div>
+   <div class="row">
+       <div class="col-10 col-md-4">
+           {{ choice_form.choice_text }}
+       </div>
+       <div class="col-3 self-align-end">
+           <button type="button" class="btn btn-danger"
+           hx-on="click: this.closest('form').remove()">X</button>
+       </div>
       </div>
-      <div class="col-10">
-         {{ choice_form.choice_text }}
-      </div>
+
    </div>
 </form>

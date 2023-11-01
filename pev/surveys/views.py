@@ -1,11 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator
-from django.db.models import Count
-from django.http import HttpResponseForbidden
-from functools import wraps
-
-from polls.models import Poll
+from django.http import HttpResponse
+from polls.models import Poll, Vote
 
 from .forms import SurveyAddForm
 from .models import Survey
@@ -56,7 +52,7 @@ def survey_end(request, survey_id):
     
     context = {
         'survey': survey,
-        'polls': survey__poll,
+        'polls': survey.poll_set.all(),
     }
        
     return render(request, 'surveys/end.html', context)
@@ -78,27 +74,13 @@ def survey_edit(request, survey_id):
         return render(request, 'surveys/end.html', {'survey': survey})
 
 
+@login_required
+@require_owner(Survey, 'survey_id')
+def survey_delete(request, survey_id):
+    survey = get_object_or_404(Survey, pk=survey_id)
+    votes = Vote.objects.filter(survey=survey)
 
+    votes.delete()
+    survey.delete()
 
-
-
-@login_required()
-def polls_list(request):
-    all_surveys = Survey.objects.all()
-    context = {
-        'surveys': all_surveys,
-    }
-    return render(request, 'polls/polls_list.html', context)
-
-@login_required()
-def list_by_user(request):
-    all_surveys = Survey.objects.filter(owner=request.user)
-    paginator = Paginator(all_surveys, 7)  # Show 7 contacts per page
-
-    page = request.GET.get('page')
-    survey = paginator.get_page(page)
-
-    context = {
-        '': surveys,
-    }
-    return render(request, 'polls/polls_list.html', context)
+    return redirect("surveys:survey_index")

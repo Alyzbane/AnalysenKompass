@@ -47,6 +47,8 @@
                     {% endif %}
                     <a href="{% url 'surveys:survey_edit' survey.id %}" class="mr-3" data-toggle="tooltip" data-placement="top"
                         title="Edit Survey"><i class="fas fa-pencil-alt float-right btn btn-primary btn-sm mr-1"></i></a>
+                     <a href="{% url 'surveys:survey_delete' survey.id %}" class="mr-3" data-toggle="tooltip" data-placement="top"
+                    title="Delete Survey" onclick="return confirm('Delete this survey?')"><i class="fas fa-trash-alt float-right btn btn-danger btn-sm mr-1"></i></a>
                     {% endif %}
                 </li>
 

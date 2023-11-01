@@ -6,7 +6,6 @@
         <div class="col-md-6 offset-md-3">
             <h2>Edit poll</h2>
             {% if messages %}
-            {% if messages %}
             <div class="messages">
                 {% for message in messages %}
                 <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
@@ -17,7 +16,6 @@
                 {% endfor %}
             </div>
             {% endif %}
-            {% endif %}
             <form action="" method="POST">
                 {% csrf_token %}
                 {% for field in form %}
@@ -27,15 +25,17 @@
                     {{ field }}
                 </div>
                 {% endfor %}
-                <button type="submit" class="btn btn-primary">Update</button>
-                <a class="btn btn-warning" href="{% url 'polls:add_choice' poll.id %}" role="button">Add Choice</a>
+                <button type="submit" class="btn btn-success">Update</button>
+                <a class="btn btn-primary" href="{% url 'polls:add_choice' poll.id %}" role="button">Add Choice</a>
+                <a class="btn btn-secondary" href="{% url 'surveys:survey_detail' poll.survey.id %}" role="button">Back</a>
+
             </form>
 
             <div class="choices">
                 <h2 class="text-center mt-3">Choices</h2>
                 <hr>
                 <ul class="list-group">
-                  
+                    {% include 'polls/partials/detail_choice.html' %}
                 </ul>
             </div>
         </div>

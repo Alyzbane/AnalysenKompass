@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.urls import reverse_lazy
 from common.utils.decorators import require_owner
+from django.views import generic
 
-from polls.forms import PollAddForm, ChoiceAddForm, PollEditForm
+from polls.forms import PollAddForm, ChoiceAddForm, PollEditForm, ChoiceEditForm
 from polls.models import Poll, Choice, Vote
-from surveys.models import Survey
 
 
 @login_required
@@ -25,3 +26,4 @@ def polls_edit(request, poll_id):
         form = PollEditForm(instance=poll)
 
     return render(request, "polls/poll_edit.html", {'form': form, 'poll': poll})
+
