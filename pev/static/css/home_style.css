@@ -5,8 +5,8 @@ html, body {
     color: white;
   }
 html{
-    background-image: url("/img/background.png");
-    background-color: royalblue;
+    background-image: url("../img/background.png");
+    background-color: rgb(203, 215, 252);
     background-size: cover;
 }
 body {
