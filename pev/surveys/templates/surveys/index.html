@@ -5,17 +5,7 @@
     <div class="row">
         <div class="col-md-8 offset-sm-2">
             <h1 class="text-center mb-5">Welcome to Personal Evaluation System!</h1>
-            {% if messages %}
-            <div class="messages">
-                {% for message in messages %}
-                <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                {% endfor %}
-            </div>
-            {% endif %}
+
 
             <a class="btn btn-{% if 'title' in request.GET %}warning{% else %}primary{% endif %} mb-3" href="?title=True"
                 role="button"><i class="fas fa-sort-alpha-down"></i>

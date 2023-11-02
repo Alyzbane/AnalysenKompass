@@ -4,7 +4,8 @@
             <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button type="submit" class="btn btn-primary">{{ button_text }}</button>
+                <button type="submit" class="btn btn-success">{{ button_text }}</button>
+                <a role="button" href="{% url 'surveys:survey_index' %}" class="btn btn-primary">Back</a>
             </form>
         </div>
     </div>

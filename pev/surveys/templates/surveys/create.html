@@ -4,12 +4,7 @@
 <div class="container">
    <div class="row center">
       <div class="col-md-8 offset-md-2">
-         <ul class="messages">
-            {% for message in messages %}
-            <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-            {% empty %}
-            {% endfor %}
-         </ul>
+
          <h1 class="text-center mb-15">New Survey</h1>
          {% include 'surveys/partials/survey_form.html' with button_text="Create" %}
       </div>

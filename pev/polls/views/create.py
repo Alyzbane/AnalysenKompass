@@ -49,6 +49,7 @@ def create_choice(request, poll_id):
     return render(request, 'polls/add_choice.html', context)
 
 
+
 @login_required
 @require_owner(Poll, 'poll_id')
 def choice_protocol(request, poll_id):

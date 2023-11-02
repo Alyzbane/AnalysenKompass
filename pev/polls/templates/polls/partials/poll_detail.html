@@ -1,12 +1,36 @@
 {% for poll in polls %}
-<li class="list-group-item">
-    <a href="{% url 'polls:add_vote' poll.pk %}">{{ poll.poll_text }}</a>
-    
+<ul class="list-group">
+    <li class="list-group-item">
+        <a href="{% url 'polls:add_vote' poll.pk %}">{{ poll.poll_text }}</a>
+ 
     {% if request.user == poll.survey.owner %}
     {% if poll.survey.active %}
-    <a class="btn btn-primary float-right mt-5" href="{% url 'polls:edit_poll' poll.pk %}" role="button">Edit Poll</a>
+        <a href="{% url 'polls:edit_poll' poll.id %}" class="mr-3" data-toggle="tooltip" data-placement="top" title="Edit Poll"><i class="fas fa-pencil-alt float-right btn btn-primary btn-sm mr-1"></i></a>
+        <a href="{% url 'polls:delete_poll' poll.id %}" class="mr-3" data-toggle="tooltip" data-placement="top" title="Delete Poll"><i class="fas fa-trash-alt float-right btn btn-danger btn-sm mr-1"></i></a>
     {% endif %}
     {% endif %}
 
-</li>
+    </li>
+</ul>
+
+
 {% endfor %}
+   
+    <ul class="list-group">
+                {% for survey in surveys %}
+                <li class="list-group-item"><a href="{% url 'surveys:survey_detail' survey.id %}">{{ survey.title|truncatewords:5 }}
+                        {% if not survey.active%}
+                        <i class="fas fa-check-circle ml-2"></i>
+                        {% endif %}
+                    </a>
+                    {% if request.user == survey.owner %}
+                    {% if survey.active %}
+                    <a href="{% url 'surveys:survey_end' survey.id %}" data-toggle="tooltip" data-placement="top" title="End Survey"
+                        onclick="return confirm('End this survey?')"><i class="fas fa-step-forward float-right btn btn-danger btn-sm"></i></a>
+                    {% endif %}
+                   
+                    {% endif %}
+                </li>
+
+                {% endfor %}
+            </ul>

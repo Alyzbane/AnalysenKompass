@@ -3,17 +3,6 @@ from django.shortcuts import render, get_object_or_404
 from polls.models import Poll
 
 def poll_detail(request, poll_id):
-    """
-    Displaying the polls details
-
-    Args:
-        request (get) 
-        poll_id (pk) 
-
-    Returns:
-        render: Poll summary
-    """
-
     poll = get_object_or_404(Poll, id=poll_id)
 
     loop_count = poll.choice_set.count()

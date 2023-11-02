@@ -1,0 +1,11 @@
+
+          <div class="container">
+                <h2>{{ edit_title }}</h2>
+                {% for field in form %}
+                <div class="form-group">
+                    {{ field.errors }}
+                    {{ field.label_tag }}
+                    {{ field }}
+                </div>
+                {% endfor %}
+          <div>
