@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.http import HttpResponse
 
 from polls.forms import PollAddForm, ChoiceAddForm
-from polls.models import Poll
+from polls.models import Poll, Choice
 from surveys.models import Survey
 from common.utils.decorators import require_owner
 
@@ -36,3 +36,7 @@ def poll_delete(request, poll_id):
 
    
 
+@login_required
+@require_owner(Choice, 'choice_id')
+def choice_delete(request, choice_id):
+    pass

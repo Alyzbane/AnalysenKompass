@@ -41,7 +41,6 @@ def choice_edit(request, choice_id):
             return redirect("polls:detail", choice_id=choice.pk)
 
     else:
-        form = PollEditForm(instance=)
-        return HttpResponse(form)
+        form = PollEditForm(instance=choice)
 
-    return render(request, "polls/poll_edit.html", {'form': form, 'poll': poll})
+    return render(request, "polls/partials/detail_choice.html", {'form': form, 'choice': choice})
