@@ -10,15 +10,16 @@
 <h4>Choices:</h4>
 <div class="container-fluid">
     <ul class="list-group list-group-action">
-        <li class="list-group-items list-group-flush"></li>
+        <li class="list-group-items list-group-flush">{{ choice.choice_text }}</li>
     </ul>
 </div>
 <hr>
-<form method="post" action="">
- {% csrf_token %}
-<button type="submit" class="btn btn-danger">Confirm</button>
-<a class="btn btn-primary" role="button" href="{% url "polls:edit_poll" poll.id %}">Cancel</a>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-danger">Confirm</button>
+  <a class="btn btn-primary" href="{% url 'polls:edit_poll' poll_id %}">Cancel</a>
 </form>
+
 </div>
 
 {% endblock %}

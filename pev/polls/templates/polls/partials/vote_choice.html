@@ -1,5 +1,4 @@
-
-<form hx-post="{% url 'polls:protocol_vote' poll.id %}" hx-trigger="click from:#submit-vote" hx-target="#form-choices">
+<form hx-post="{% url 'polls:add_vote' poll.id %}" hx-trigger="click from:#submit-vote" hx-target="#form-choices">
 {% csrf_token %}  
     <div class="container-fluid">
         {% for choice in poll.choice_set.all %}

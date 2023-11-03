@@ -4,22 +4,10 @@ from django.test import TestCase
 from django.utils import timezone
 
 from polls.models import Poll, Vote, Choice
+from surveys.models import Survey
 
 
 class PollModelTest(TestCase):
-
-    def test_user_can_vote(self):
-        """
-        Check User voting permission
-        """
-        user = User.objects.create_user('john')
-        poll = Poll.objects.create(owner=user)
-        self.assertTrue(poll.user_can_vote(user))
-
-        choice = poll.choice_set.create(choice_text='pizza')
-        Vote.objects.create(user=user, poll=poll, choice=choice)
-        self.assertFalse(poll.user_can_vote(user))
-
     def test_poll_creation(self):
         """ 
         Create a poll from User side
@@ -65,3 +53,26 @@ class PollModelTest(TestCase):
         for i, saved_choice in enumerate(saved_choices):
             self.assertEqual(saved_choice.choice_text, f"Test Choice {i + 1}")
 
+
+class VoteModelTest(TestCase):
+
+    def test_user_can_vote(self):
+        """
+        Check User voting permission
+        """
+        user = User.objects.create_user('john')
+        poll = Poll.objects.create(owner=user)
+        self.assertTrue(poll.user_can_vote(user))
+
+        choice = poll.choice_set.create(choice_text='pizza')
+        Vote.objects.create(user=user, poll=poll, choice=choice)
+        self.assertFalse(poll.user_can_vote(user))
+
+    def test_vote_deleted_by_poll(self):
+        """
+        Delete the vote once the survey is deleted too
+        """
+
+        user = User.objects.create_user('wick')
+        survey = Survey.objects.create(owner=user, title="test")
+        self.assertTrue(survey.owner == user.username)

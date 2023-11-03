@@ -2,14 +2,16 @@
 <div class="container">
     <h1>{{ poll.poll_text }} </h1>
      <hr>
-<div class="row">
-  <div class="col-4 ">
-    <p class="text-middle me-2"> Page {{ polls_page.number }} </p>
-  </div>
-  <div class="col-4">
-   <button type="button" hx-get="{% url 'polls:protocol_vote' poll.pk %}" class="btn btn-warning me-2" id="next"><</button>
-    <button type="button" action="get" class="btn btn-secondary me-2" id="prev">></button>
-  </div>
+
+
+     <div class="row">
+    <div class="col-4">
+        <p class="text-middle me-2">Page {{ polls_page.number }}</p>
+    </div>
+    <div class="col-4">
+        <a href="?page={{ polls_page.previous_page_number }}" class="btn btn-secondary me-2" id="next"><</a>
+        <a href="?page={{ polls_page.next_page_number }}" class="btn btn-secondary me-2" id="next">></a>
+    </div>
 </div>
 
 <hr>

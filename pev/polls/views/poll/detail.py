@@ -11,6 +11,3 @@ def poll_detail(request, poll_id):
         'loop_time': range(0, loop_count),
     }
     return render(request, 'polls/poll_detail.html', context)
-
-def test(request):
-    return render(request, 'polls/test.html')
