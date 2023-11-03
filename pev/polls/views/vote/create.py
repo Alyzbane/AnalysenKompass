@@ -13,7 +13,7 @@ def poll_vote(request, poll_id):
     poll = get_object_or_404(Poll, pk=poll_id)
     if not poll.user_can_vote(request.user):
     #    return redirect("polls:detail_poll", )
-        return HttpResponse("TANGA")
+        return HttpResponse("Di pa nagana")
 
     poll = Poll.objects.get(pk=poll_id)
     if request.method == "POST":
