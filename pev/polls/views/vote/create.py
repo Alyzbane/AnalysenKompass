@@ -12,9 +12,7 @@ from surveys.models import Survey
 def poll_vote(request, poll_id):
     poll = get_object_or_404(Poll, pk=poll_id)
     if not poll.user_can_vote(request.user):
-        messages.error(
-            request, "You already voted this poll!", extra_tags='alert alert-warning alert-dismissible fade show')
-    #    return redirect("surveys:survey_detail", poll.survey.pk)
+        #    return redirect("surveys:survey_detail", poll.survey.pk)
         return HttpResponse("You already voted in this poll!")
     
     return render(request, "polls/poll_vote.html", {"poll": poll})
@@ -37,8 +35,7 @@ def vote_protocol(request, poll_id):
             vote = Vote(user=request.user, survey=poll.survey, poll=poll, choice=choice)
             vote.save()
             return HttpResponse(Vote.objects.get(pk=vote.id))
-    
-    if request.method == "GET":
+    else: 
         polls =  Survey.objects.get(id=poll.survey.id)
         polls_per_page = 1
         paginator = Paginator(polls, polls_per_page)

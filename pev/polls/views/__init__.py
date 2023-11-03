@@ -1,8 +1,3 @@
-from .detail import *
-from .create import *
-from .list import *
-from .edit import *
+from .poll import *
 from .vote import *
-from .delete import *
-
-from polls.views.choice import *
+from .choice import *
