@@ -11,5 +11,6 @@ class PollAddForm(forms.ModelForm):
         widgets = {
             'poll_text': forms.Textarea(attrs={'class': 'form-control',
                                           'rows': 5,
-                                          'cols': 20}),
+                                          'cols': 20,
+                                          'autofocus': True,}),
         }

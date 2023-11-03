@@ -34,9 +34,3 @@ def poll_delete(request, poll_id):
    
    return render(request, "polls/delete_poll.html", {"poll": poll})
 
-   
-
-@login_required
-@require_owner(Choice, 'choice_id')
-def choice_delete(request, choice_id):
-    pass

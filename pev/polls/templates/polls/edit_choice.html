@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container-fluid">
+    <form method="post" action="">
+        {% csrf_token %} 
+        {% include 'polls/partials/edit_form.html' %}
+        <button type="submit" class="btn btn-success">Update</button>
+        <a href="{% url 'polls:edit_poll' choice.poll.pk %}" role="button" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

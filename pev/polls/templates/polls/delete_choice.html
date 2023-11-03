@@ -6,15 +6,18 @@
 <div class="container-fluid">
 <strong class="text-danger"> Delete this poll? </strong> 
 <br>
-<h2>Poll Title: {{ poll.poll_text }}</h2>
 <hr>
 <h4>Choices:</h4>
-{% include 'polls/partials/list_choice.html' %}
+<div class="container-fluid">
+    <ul class="list-group list-group-action">
+        <li class="list-group-items list-group-flush"></li>
+    </ul>
+</div>
 <hr>
 <form method="post" action="">
  {% csrf_token %}
 <button type="submit" class="btn btn-danger">Confirm</button>
-<a class="btn btn-primary" role="button" href="{% url "surveys:survey_detail" poll.survey.id %}">Cancel</a>
+<a class="btn btn-primary" role="button" href="{% url "polls:edit_poll" poll.id %}">Cancel</a>
 </form>
 </div>
 

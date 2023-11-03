@@ -5,12 +5,13 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 offset-md-2">
-            <h1 class="text-center mb-5">Survey: {{ survey.title }}</h1>
-            
-            <h2>List of Polls in this Survey</h2>
+            <hr>
+            <h3 class="text-center mb-5">{{ survey.title }}</h3>
+            <blockquote class="blockquote">{{ survey.description }} </blockquote>
+            <hr>
+            <h2>Polls List</h2>
             <ul class="list-group">
                 {% include 'polls/partials/poll_detail.html' %}
-
             </ul>
             
             {% if request.user == survey.owner %}

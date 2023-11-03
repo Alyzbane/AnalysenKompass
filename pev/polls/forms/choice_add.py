@@ -9,5 +9,5 @@ class ChoiceAddForm(forms.ModelForm):
         model = Choice
         fields = ['choice_text', ]
         widgets = {
-            'choice_text': forms.TextInput(attrs={'class': 'form-control', })
+            'choice_text': forms.TextInput(attrs={'class': 'form-control', 'autofocus': True })
         }

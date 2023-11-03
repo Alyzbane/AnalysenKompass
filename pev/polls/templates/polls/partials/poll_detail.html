@@ -15,7 +15,6 @@
 
 
 {% endfor %}
-   
     <ul class="list-group">
                 {% for survey in surveys %}
                 <li class="list-group-item"><a href="{% url 'surveys:survey_detail' survey.id %}">{{ survey.title|truncatewords:5 }}
