@@ -12,6 +12,9 @@ class Vote(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def get_mean(self):
+        pass
+    
     def selected_choice(self):
         return self.choice
 
