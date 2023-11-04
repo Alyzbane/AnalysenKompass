@@ -22,13 +22,12 @@ def create_survey(request):
 def survey_detail(request, survey_id):
     survey = get_object_or_404(Survey, pk=survey_id)
     polls = Poll.objects.filter(survey=survey)
+
     context = {
         'survey': survey,
         'polls': polls,
     }
-
     return render(request, 'surveys/detail.html', context)
-
 
 @login_required()
 def survey_index(request):

@@ -1,30 +1,22 @@
 {% extends 'base.html' %} {% block content %}
 <div class="container">
-    <h1>{{ poll.poll_text }} </h1>
-     <hr>
-
-
-     <div class="row">
-    <div class="col-4">
-        <p class="text-middle me-2">Page {{ polls_page.number }}</p>
-    </div>
-    <div class="col-4">
-        <a href="?page={{ polls_page.previous_page_number }}" class="btn btn-secondary me-2" id="next"><</a>
-        <a href="?page={{ polls_page.next_page_number }}" class="btn btn-secondary me-2" id="next">></a>
-    </div>
-</div>
-
-<hr>
-<br>
+    <h1>{{ poll.poll_text }}</h1>
+    <hr />
+        {% include 'polls/partials/dropdown_poll.html' %}
+    <hr />
+    <br />
     <div id="form-choices">
-        {% include 'polls/partials/vote_choice.html' %}
-    </div>
 
- <div class="container-fluid">
-    <button type="submit" 
-            class="btn btn-primary mt-3 align-self-end" 
-            id="submit-vote">Vote</button>
+<form method="post" action="{% url 'polls:add_vote' poll.pk %}">
+    {% csrf_token %}  
+    {% include 'polls/partials/radio_choice.html' %}
+    </div>
+    <div class="container-fluid">
+        {% if selected_choice_id is None%}
+            <button type="submit" class="btn btn-primary mt-3 align-self-end" id="submit-vote">Vote</button>
+        {% endif %}
         <a class="btn btn-warning mt-3 align-self-end" href="{% url 'surveys:survey_detail' poll.survey.pk %}" role="button">Cancel</a>
     </div>
+    </form>
 </div>
 {% endblock content %}

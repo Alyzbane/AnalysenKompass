@@ -2,20 +2,30 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponse
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-
 
 from polls.models import Poll, Choice, Vote
 from surveys.models import Survey
 
 @login_required
 def poll_vote(request, poll_id):
-    poll = get_object_or_404(Poll, pk=poll_id)
-    if not poll.user_can_vote(request.user):
-    #    return redirect("polls:detail_poll", )
-        return HttpResponse("Di pa nagana")
 
-    poll = Poll.objects.get(pk=poll_id)
+    poll = get_object_or_404(Poll, pk=poll_id)
+    polls = Poll.objects.filter(survey=poll.survey)
+    current_poll_number = list(polls).index(poll) + 1
+
+    user_voted = Vote.objects.filter(user=request.user, poll=poll).first()
+    selected_choice_id = user_voted.choice.id if user_voted else None
+
+    context =  {
+        "poll": poll,
+        "polls": polls,
+        "current_poll_number": current_poll_number,
+        "selected_choice_id": selected_choice_id,
+    }
+
+    if not poll.user_can_vote(request.user):
+        return render(request, "polls/poll_vote.html", context)
+
     if request.method == "POST":
         try:
             choice = poll.choice_set.get(pk=request.POST.get('choice'))
@@ -25,34 +35,10 @@ def poll_vote(request, poll_id):
                 "poll": poll,
                 "messages": messages,
             }
-            return render(request, "polls/poll_detail", context)
+            return redirect("polls:add_vote", poll.id)
         else: 
             vote = Vote(user=request.user, survey=poll.survey, poll=poll, choice=choice)
             vote.save()
-            return HttpResponse(Vote.objects.get(pk=vote.id)) 
-
-    return render(request, "polls/poll_vote.html", {"poll": poll})
-
-   
-@login_required
-def vote_protocol(request, poll_id):
-    if request.method == "GET":
-        poll = get_object_or_404(Poll, pk=poll_id)
-        related_polls = Poll.objects.filter(survey=poll.survey)
-        polls_per_page = 1
-        paginator = Paginator(related_polls, polls_per_page)
-        page = request.GET.get('page')
-
-        try:
-            polls_page = paginator.page(page)
-        except PageNotAnInteger:
-            polls_page = paginator.page(1)
-        except EmptyPage:
-            polls_page = paginator.get_page(paginator.num_pages)
-
-        context = {
-            'poll': poll,
-            'polls_page': polls_page,
-        }
-
-        return render(request, "polls/partials/vote_poll.html", context)
+            return redirect("polls:add_vote", poll.id)
+    else: 
+        return render(request, "polls/poll_vote.html", context)

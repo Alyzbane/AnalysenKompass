@@ -37,10 +37,6 @@ def choice_protocol(request, poll_id):
             choice = choice_form.save(commit=False)
             choice.poll = poll
             choice.save()
-
-            messages.success(
-                request, "Choice added successfully.",
-                extra_tags='alert alert-success alert-dismissible fade show')
     context = {
         'choice_form': choice_form,
         'poll': poll,

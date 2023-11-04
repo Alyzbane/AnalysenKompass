@@ -1,3 +1,10 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Survey
+from  polls.admin import PollInLine
+
+@admin.register(Survey)
+class SurveyAdmin(admin.ModelAdmin):
+    list_display = ["title", "description", 'created_at']
+    search_fields = ["title"]
+    inlines = [PollInLine]

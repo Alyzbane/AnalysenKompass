@@ -1,4 +1,3 @@
-<!-- choice_form.html -->
 <form hx-post="{% url 'polls:protocol_choice' poll.id %}" hx-swap="beforeend" hx-on="htmx:afterRequest: this.remove()" hx-trigger="click from:#submit-all">
    {% csrf_token %}
    <div class="container-fluid">

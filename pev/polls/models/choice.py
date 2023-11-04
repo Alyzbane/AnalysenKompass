@@ -15,4 +15,4 @@ class Choice(models.Model):
         return self.vote_set.count()
 
     def __str__(self):
-        return f"{self.poll.poll_text[:25]} - {self.choice_text[:25]}"
+        return f"{self.choice_text[:25]}"

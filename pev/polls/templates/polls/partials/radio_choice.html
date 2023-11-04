@@ -1,0 +1,14 @@
+  <div class="container-fluid">
+        {% for choice in poll.choice_set.all %}
+        <input type="radio" class="list-group-items" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"
+        {% if selected_choice_id == choice.id %} 
+        checked
+        {% endif %}
+        {% if selected_choice_id %} 
+        disabled 
+        {% endif %}>
+            <label for=choice"{{ forloop.counter }}">{{ choice.choice_text }}</label> 
+        <br />
+
+        {% endfor %}
+    </div>

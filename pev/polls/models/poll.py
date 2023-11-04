@@ -9,7 +9,11 @@ class Poll(models.Model):
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE) 
     poll_text = models.TextField(max_length=255)
     pub_date = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True) 
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def has_choices(self):
+        return self.choice_set.exists()
 
     def is_owner(self, user):
         return self.survey.owner == user

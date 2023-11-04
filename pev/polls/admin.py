@@ -8,6 +8,10 @@ class ChoiceInline(admin.TabularInline):  # or admin.StackedInline for a differe
     model = Choice
     extra = 1
 
+class PollInLine(admin.TabularInline):
+    model = Poll
+    extra = 1
+
 @admin.register(Poll)
 class PollAdmin(admin.ModelAdmin):
     list_display = ["poll_text", "pub_date", "created_at"]

@@ -1,0 +1,15 @@
+
+    <div class="row">
+        <div class="dropdown-show">
+            <div class="dropdown ">
+                <button class="btn btn-secondary dropdown-toggle ml-4" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Poll {{ current_poll_number }}
+                </button>
+                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                {% for poll in polls %}
+                    <a class="dropdown-item" href="{% url 'polls:add_vote' poll.pk %}">{{ poll.poll_text }}</a>
+                {% endfor %}
+            </div> 
+            </div>
+        </div>
+    </div>
