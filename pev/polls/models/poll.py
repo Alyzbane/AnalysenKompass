@@ -7,7 +7,7 @@ from surveys.models import Survey
 
 class Poll(models.Model):
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE) 
-    poll_text = models.TextField(max_length=255)
+    text = models.TextField(max_length=255)
     pub_date = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True) 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -51,4 +51,4 @@ class Poll(models.Model):
         return res
 
     def __str__(self):
-       return self.poll_text
+       return self.text

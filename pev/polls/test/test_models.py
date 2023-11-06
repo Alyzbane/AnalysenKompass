@@ -15,13 +15,13 @@ class PollModelTest(TestCase):
         user = User.objects.create_user('john')
         poll = Poll.objects.create(
             owner=user,  # Replace with your user ID
-            poll_text="Test Poll"
+            text="Test Poll"
         )
         poll.save()
 
         # Check if the poll was saved to the database
         saved_poll = Poll.objects.get(pk=poll.pk)
-        self.assertEqual(saved_poll.poll_text, "Test Poll")
+        self.assertEqual(saved_poll.text, "Test Poll")
 
     def test_choices_creation(self):
         """
@@ -31,7 +31,7 @@ class PollModelTest(TestCase):
         user = User.objects.create_user('john')
         poll = Poll.objects.create(
             owner=user,  # Replace with your user ID
-            poll_text="Test Poll with Choices"
+            text="Test Poll with Choices"
         )
 
         # Create 5 test choice objects for the poll

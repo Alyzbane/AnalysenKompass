@@ -22,4 +22,4 @@ class Vote(models.Model):
         return self.user == user
 
     def __str__(self):
-        return f'{self.poll.poll_text[:15]} - {self.choice.choice_text[:15]} - {self.user.username}'
+        return f'{self.poll.text[:15]} - {self.choice.choice_text[:15]} - {self.user.username}'
