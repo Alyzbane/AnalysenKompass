@@ -21,6 +21,7 @@ def poll_vote(request, poll_id):
         "polls": polls,
         "current_poll_number": current_poll_number,
         "selected_choice_id": selected_choice_id,
+        "vote": user_voted,
     }
 
     if not poll.user_can_vote(request.user):

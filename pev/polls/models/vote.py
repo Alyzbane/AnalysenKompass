@@ -17,6 +17,9 @@ class Vote(models.Model):
     
     def selected_choice(self):
         return self.choice
+    
+    def is_owner(self, user):
+        return self.user == user
 
     def __str__(self):
         return f'{self.poll.poll_text[:15]} - {self.choice.choice_text[:15]} - {self.user.username}'
