@@ -83,3 +83,17 @@ def survey_delete(request, survey_id):
     survey.delete()
 
     return redirect("surveys:survey_index")
+
+
+@login_required
+def survey_report(request):
+    return render(request, 'chart.html')
+
+@login_required
+def survey_chart(request, survey_id):
+    survey = get_object_or_404(Survey, pk=survey_id)
+
+    labels = []
+    data = []
+    
+    #queryset = Vote.objects.filter(survey=survey).values  
