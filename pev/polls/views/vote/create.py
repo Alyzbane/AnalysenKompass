@@ -15,6 +15,7 @@ def poll_vote(request, poll_id):
 
     user_voted = Vote.objects.filter(user=request.user, poll=poll).first()
     selected_choice_id = user_voted.choice.id if user_voted else None
+    is_active = poll.survey.active
 
     context =  {
         "poll": poll,
@@ -22,12 +23,13 @@ def poll_vote(request, poll_id):
         "current_poll_number": current_poll_number,
         "selected_choice_id": selected_choice_id,
         "vote": user_voted,
+        "is_active": is_active,
     }
 
     if not poll.user_can_vote(request.user):
         return render(request, "polls/poll_vote.html", context)
 
-    if request.method == "POST":
+    if is_active and request.method == "POST":
         try:
             choice = poll.choice_set.get(pk=request.POST.get('choice'))
         except (KeyError, Choice.DoesNotExist):

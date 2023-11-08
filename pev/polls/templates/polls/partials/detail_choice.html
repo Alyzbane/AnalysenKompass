@@ -2,11 +2,11 @@
     {% for choice in poll.choice_set.all %}
     <ul class="list-group">
         <li class="list-group-item list-group-item-action" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
-            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label> 
+            <label for="choice{{ forloop.counter }}">{{ choice.text }}</label> 
             {% if request.user == choice.poll.survey.owner %}
                 {% if choice.poll.survey.active %}
                 <a href="{% url 'polls:edit_choice' choice.id %}" class="mr-3" hx-swap="outerHTML"  hx-target="choice{{ forloop.counter }}" data-toggle="tooltip" data-placement="top" title="Edit Choice"><i class="fas fa-pencil-alt float-right btn btn-primary btn-sm mr-1"></i></a>
-                <a href="{% url 'polls:delete_choice' poll_id=choice.poll.pk choice_id=choice.id %}" class="mr-3" data-toggle="tooltip" data-placement="top" title="Delete Choice"><i class="fas fa-trash-alt float-right btn btn-danger btn-sm mr-1"></i></a>
+                <a href="{% url 'polls:delete_choice' choice_id=choice.id %}" class="mr-3" data-toggle="tooltip" data-placement="top" title="Delete Choice"><i class="fas fa-trash-alt float-right btn btn-danger btn-sm mr-1"></i></a>
                 {% endif %}
             {% endif %} 
         </li>

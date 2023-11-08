@@ -39,7 +39,7 @@ class Poll(models.Model):
                            'danger', 'dark', 'warning', 'info']
 
             d['alert_class'] = secrets.choice(alert_class)
-            d['text'] = choice.choice_text
+            d['text'] = choice.text
             d['num_votes'] = choice.get_vote_count
             if not self.get_vote_count:
                 d['percentage'] = 0

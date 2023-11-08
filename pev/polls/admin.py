@@ -23,8 +23,8 @@ class PollAdmin(admin.ModelAdmin):
 
 @admin.register(Choice)
 class ChoiceAdmin(admin.ModelAdmin):
-    list_display = ["choice_text", "poll", 'created_at', 'updated_at']
-    search_fields = ["choice_text", "poll__poll_text"]
+    list_display = ["text", "poll", 'created_at', 'updated_at']
+    search_fields = ["text", "poll__poll_text"]
     autocomplete_fields = ["poll"]
 
 

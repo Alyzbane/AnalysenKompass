@@ -15,7 +15,7 @@
                     {{ field }}
                 </div>
                 {% endfor %}
-                <button type="submit" class="btn btn-success">Update</button>
+                <button type="submit" class="btn btn-success">Update Title</button>
                 <a class="btn btn-primary" href="{% url 'polls:add_choice' poll.id %}" role="button">Add Choice</a>
                 <a class="btn btn-secondary" href="{% url 'surveys:survey_detail' poll.survey.id %}" role="button">Back</a>
 

@@ -12,9 +12,6 @@ class Vote(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def get_mean(self):
-        pass
-    
     def selected_choice(self):
         return self.choice
     
@@ -22,4 +19,4 @@ class Vote(models.Model):
         return self.user == user
 
     def __str__(self):
-        return f'{self.poll.text[:15]} - {self.choice.choice_text[:15]} - {self.user.username}'
+        return f'{self.poll.text[:15]} - {self.choice.text[:15]} - {self.user.username}'

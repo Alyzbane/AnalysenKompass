@@ -37,10 +37,10 @@ class PollModelTest(TestCase):
         # Create 5 test choice objects for the poll
         choices = []
         for i in range(1, 6):
-            choice_text = f"Test Choice {i}"
+            text = f"Test Choice {i}"
             choice = Choice.objects.create(
                 poll=poll,
-                choice_text=choice_text
+                text=text
             )
             choice.save()
             choices.append(choice)
@@ -51,7 +51,7 @@ class PollModelTest(TestCase):
 
         # Check the text of each choice
         for i, saved_choice in enumerate(saved_choices):
-            self.assertEqual(saved_choice.choice_text, f"Test Choice {i + 1}")
+            self.assertEqual(saved_choice.text, f"Test Choice {i + 1}")
 
 
 class VoteModelTest(TestCase):
@@ -64,7 +64,7 @@ class VoteModelTest(TestCase):
         poll = Poll.objects.create(owner=user)
         self.assertTrue(poll.user_can_vote(user))
 
-        choice = poll.choice_set.create(choice_text='pizza')
+        choice = poll.choice_set.create(text='pizza')
         Vote.objects.create(user=user, poll=poll, choice=choice)
         self.assertFalse(poll.user_can_vote(user))
 

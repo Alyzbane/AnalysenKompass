@@ -1,0 +1,14 @@
+.custom-radio {
+    display: block; /* Make the label a block element */
+    margin: 0;
+    padding: 0;
+    cursor: pointer; /* Change the cursor to a pointer on hover for better UX */
+    position: relative;
+    user-select: none;
+}
+
+.custom-radio input[type="radio"] {
+    position: relative;
+    opacity: 1;
+    cursor: pointer;
+}

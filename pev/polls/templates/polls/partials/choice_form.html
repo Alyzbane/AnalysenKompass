@@ -2,13 +2,13 @@
    {% csrf_token %}
    <div class="container-fluid">
        <div class="row col-4 col-md-3">
-           <label for="{{ choice_form.choice_text.id_for_label }}">
-               {{ choice_form.choice_text.label_tag }}
+           <label for="{{ choice_form.text.id_for_label }}">
+               {{ choice_form.text.label_tag }}
            </label>
        </div>
    <div class="row">
        <div class="col-10 col-md-4">
-           {{ choice_form.choice_text }}
+           {{ choice_form.text }}
        </div>
            <button type="button" class="btn btn-danger self-align-end"
            hx-on="click: this.closest('form').remove()">X</button>

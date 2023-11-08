@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from django.db.models import Avg, Sum
 from polls.models import Poll, Vote
 
 from .forms import SurveyAddForm
@@ -44,10 +45,9 @@ def survey_index(request):
 @require_owner(Survey, 'survey_id')
 def survey_end(request, survey_id):
     survey = get_object_or_404(Survey, pk=survey_id)
-   
-    if survey.active is True:
-        survey.active = False
-        survey.save()
+    
+    survey.active = not survey.active
+    survey.save()
     
     context = {
         'survey': survey,
@@ -61,16 +61,14 @@ def survey_end(request, survey_id):
 @require_owner(Survey, 'survey_id')
 def survey_edit(request, survey_id):
     survey = get_object_or_404(Survey, pk=survey_id)
-    if survey.active and request.method == "POST":
+    if request.method == "POST":
         form = SurveyAddForm(request.POST, instance=survey)
         if form.is_valid():
             survey.save()
             return redirect('surveys:survey_detail', survey_id=survey.pk)
-    elif survey.active:
+    else:
         form = SurveyAddForm(instance=survey)
         return render(request, 'surveys/edit.html', {'form': form})
-    else:
-        return render(request, 'surveys/end.html', {'survey': survey})
 
 
 @login_required
@@ -96,4 +94,5 @@ def survey_chart(request, survey_id):
     labels = []
     data = []
     
-    #queryset = Vote.objects.filter(survey=survey).values  
+    queryset = Vote.objects.filter(survey=survey)
+    
