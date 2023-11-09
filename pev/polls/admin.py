@@ -14,8 +14,8 @@ class PollInLine(admin.TabularInline):
 
 @admin.register(Poll)
 class PollAdmin(admin.ModelAdmin):
-    list_display = ["poll_text", "pub_date", "created_at"]
-    search_fields = ["poll_text"]
+    list_display = ["text", "pub_date", "created_at"]
+    search_fields = ["text"]
     list_filter = ['created_at', 'pub_date']
     date_hierarchy = "pub_date"
     inlines = [ChoiceInline]
@@ -23,8 +23,8 @@ class PollAdmin(admin.ModelAdmin):
 
 @admin.register(Choice)
 class ChoiceAdmin(admin.ModelAdmin):
-    list_display = ["choice_text", "poll", 'created_at', 'updated_at']
-    search_fields = ["choice_text", "poll__poll_text"]
+    list_display = ["text", "poll", 'created_at', 'updated_at']
+    search_fields = ["text", "poll__poll_text"]
     autocomplete_fields = ["poll"]
 
 

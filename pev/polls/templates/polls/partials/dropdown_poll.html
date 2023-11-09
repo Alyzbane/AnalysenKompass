@@ -7,7 +7,7 @@
                 </button>
                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 {% for poll in polls %}
-                    <a class="dropdown-item" href="{% url 'polls:add_vote' poll.pk %}">{{ poll.poll_text }}</a>
+                    <a class="dropdown-item" href="{% url 'polls:add_vote' poll.pk %}">{{ poll.text }}</a>
                 {% endfor %}
             </div> 
             </div>

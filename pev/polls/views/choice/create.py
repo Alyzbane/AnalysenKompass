@@ -1,11 +1,8 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from django.http import HttpResponse
 
-from polls.forms import PollAddForm, ChoiceAddForm
+from polls.forms import ChoiceAddForm
 from polls.models import Poll
-from surveys.models import Survey
 from common.utils.decorators import require_owner
 
 
@@ -23,7 +20,6 @@ def create_choice(request, poll_id):
     return render(request, 'polls/add_choice.html', context)
 
 
-
 @login_required
 @require_owner(Poll, 'poll_id')
 def choice_protocol(request, poll_id):
@@ -37,6 +33,7 @@ def choice_protocol(request, poll_id):
             choice = choice_form.save(commit=False)
             choice.poll = poll
             choice.save()
+
     context = {
         'choice_form': choice_form,
         'poll': poll,

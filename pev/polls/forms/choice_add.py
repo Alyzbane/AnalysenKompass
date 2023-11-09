@@ -7,7 +7,7 @@ class ChoiceAddForm(forms.ModelForm):
 
     class Meta:
         model = Choice
-        fields = ['choice_text', ]
+        fields = ['text', ]
         widgets = {
-            'choice_text': forms.TextInput(attrs={'class': 'form-control', 'autofocus': True })
+            'text': forms.TextInput(attrs={'class': 'form-control', 'autofocus': True })
         }

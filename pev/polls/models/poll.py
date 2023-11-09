@@ -7,7 +7,7 @@ from surveys.models import Survey
 
 class Poll(models.Model):
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE) 
-    poll_text = models.TextField(max_length=255)
+    text = models.TextField(max_length=255)
     pub_date = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True) 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -39,7 +39,7 @@ class Poll(models.Model):
                            'danger', 'dark', 'warning', 'info']
 
             d['alert_class'] = secrets.choice(alert_class)
-            d['text'] = choice.choice_text
+            d['text'] = choice.text
             d['num_votes'] = choice.get_vote_count
             if not self.get_vote_count:
                 d['percentage'] = 0
@@ -51,4 +51,4 @@ class Poll(models.Model):
         return res
 
     def __str__(self):
-       return self.poll_text
+       return self.text

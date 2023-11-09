@@ -1,8 +1,10 @@
 {% for poll in polls %}
 <ul class="list-group">
     <li class="list-group-item">
-        <a href="{% url 'polls:add_vote' poll.pk %}">{{ poll.poll_text }}</a>
- 
+        <a href="{% url 'polls:add_vote' poll.pk %}">{{ poll.text }}</a>
+    {% if not request.user %}
+        <i class="fas fa-check-circle ml-2"></i>
+    {% endif %} 
     {% if request.user == poll.survey.owner %}
     {% if poll.survey.active %}
         <a href="{% url 'polls:edit_poll' poll.id %}" class="mr-3" data-toggle="tooltip" data-placement="top" title="Edit Poll"><i class="fas fa-pencil-alt float-right btn btn-primary btn-sm mr-1"></i></a>

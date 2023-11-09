@@ -1,14 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from polls.models import Poll, Choice
+from polls.models import Choice
 from common.utils.decorators import require_owner
    
 
-decorators = [require_owner(Choice, 'choice_id'), login_required]
 @login_required
 @require_owner(Choice, 'choice_id')
-def choice_delete(request, poll_id, choice_id):
+def choice_delete(request, choice_id):
     choice = get_object_or_404(Choice, pk=choice_id)
+    poll_id = choice.poll.id
 
     if request.method == "POST":
         votes = choice.vote_set.all()
