@@ -1,0 +1,5 @@
+{% if user_has_voted(poll, request.user) %}
+    <i class="fas fa-check-circle ml-2 text-success" data-toggle="tooltip" data-placement="top" title="You've Voted"></i>
+{% else %}
+    <i class="fas fa-times-circle ml-2 text-danger" data-toggle="tooltip" data-placement="top" title="You Haven't Voted"></i>
+{% endif %}

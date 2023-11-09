@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import HttpResponse
+from django.urls import  reverse
+from django.http import HttpResponseRedirect
 
-from polls.forms import PollAddForm, ChoiceAddForm
+from polls.forms import PollAddForm
 from polls.models import Poll
 from surveys.models import Survey
 from common.utils.decorators import require_owner
@@ -24,7 +25,7 @@ def polls_add(request, survey_id):
             messages.success(
                 request, "Poll added successfully.",
                 extra_tags='alert alert-success alert-dismissible fade show')
-            return redirect('polls:add_choice', poll.id)
+            return HttpResponseRedirect(reverse('polls:add_choice', args={poll.id}))
     else:
         form = PollAddForm()
 

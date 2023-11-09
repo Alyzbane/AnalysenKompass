@@ -1,5 +1,5 @@
 
-<div class="container-fluid">
+<div class="form-check container-fluid">
     {% for choice in poll.choice_set.all %}
     <label class="custom-radio">
         <input type="radio" class="list-group-items" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"

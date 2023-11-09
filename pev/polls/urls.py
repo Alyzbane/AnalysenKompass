@@ -15,5 +15,5 @@ urlpatterns = [
     path('edit/choice/<int:choice_id>/', views.choice_edit, name="edit_choice"),
     path('delete/choice/<int:choice_id>/', views.choice_delete, name="delete_choice"),
     path('vote/<int:poll_id>/', views.poll_vote,  name="add_vote"),
-    path('vote-edit/<int:vote_id>', views.vote_edit, name="edit_vote"),
+    path('vote-edit/<int:vote_id>', views.vote_reset, name="reset_vote"),
 ]

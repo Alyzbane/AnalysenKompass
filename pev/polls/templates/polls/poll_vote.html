@@ -8,10 +8,10 @@
 {% block content %}
 <div class="container">
     <h1>{{ poll.text }}</h1>
-    <hr />
+    <hr/>
         {% include 'polls/partials/dropdown_poll.html' %}
-    <hr />
-    <br />
+    <hr/>
+    <br/>
     <div id="form-choices">
 
 <form method="post" action="{% url 'polls:add_vote' poll.pk %}">
@@ -19,10 +19,21 @@
     {% include 'polls/partials/radio_choice.html' %}
     </div>
     <div class="container-fluid">
+     
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <strong {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</strong>
+    {% endfor %}
+</div>
+<br/>
+{% endif %}        
+
+
         {% if selected_choice_id is None and is_active %}
             <button type="submit" class="btn btn-success mt-3 align-self-end" id="submit-vote">Vote</button>
         {% elif is_active %}
-            <a class="btn btn-secondary mt-3 align-self-end" href="{% url 'polls:edit_vote' vote.pk %}" role="button">Reset Vote</a>
+            <a class="btn btn-secondary mt-3 align-self-end" href="{% url 'polls:reset_vote' vote.pk %}" role="button">Reset Vote</a>
         {% endif %}
         <a class="btn btn-warning mt-3 align-self-end" href="{% url 'surveys:survey_detail' poll.survey.pk %}" role="button">Cancel</a>
     </div>

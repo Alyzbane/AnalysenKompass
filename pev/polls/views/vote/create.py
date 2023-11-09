@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import HttpResponse
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 
 from polls.models import Poll, Choice, Vote
 from surveys.models import Survey
@@ -33,7 +34,7 @@ def poll_vote(request, poll_id):
         try:
             choice = poll.choice_set.get(pk=request.POST.get('choice'))
         except (KeyError, Choice.DoesNotExist):
-            messages.error(request, "You already voted this poll!", extra_tags='alert alert-warning alert-dismissible fade show')
+            messages.error(request, "Choice does not exist poll!", extra_tags='alert alert-warning alert-dismissible fade show')
             context = {
                 "poll": poll,
                 "messages": messages,
@@ -42,6 +43,6 @@ def poll_vote(request, poll_id):
         else: 
             vote = Vote(user=request.user, survey=poll.survey, poll=poll, choice=choice)
             vote.save()
-            return redirect("polls:add_vote", poll.id)
+            return HttpResponseRedirect(reverse("polls:add_vote", args={poll.id}))
     else: 
         return render(request, "polls/poll_vote.html", context)

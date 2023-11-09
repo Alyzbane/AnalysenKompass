@@ -1,11 +1,12 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import HttpResponse
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 
 from common.utils.decorators import require_owner
-from polls.forms import PollAddForm, ChoiceAddForm, PollEditForm, ChoiceEditForm
-from polls.models import Poll, Choice, Vote
+from polls.forms import PollEditForm
+from polls.models import Poll
 
 
 @login_required
@@ -19,7 +20,7 @@ def polls_edit(request, poll_id):
             form.save()
             messages.success(request, "Poll Updated successfully.",
                              extra_tags='alert alert-success alert-dismissible fade show')
-            return redirect("polls:detail", poll_id=poll.pk)
+            return HttpResponseRedirect(reverse("polls:detail", args={poll.pk}))
 
     else:
         form = PollEditForm(instance=poll)
