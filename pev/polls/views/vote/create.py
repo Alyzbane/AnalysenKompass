@@ -34,10 +34,8 @@ def poll_vote(request, poll_id):
         try:
             choice = poll.choice_set.get(pk=request.POST.get('choice'))
         except (KeyError, Choice.DoesNotExist):
-            messages.error(request, "Choice does not exist poll!", extra_tags='alert alert-warning alert-dismissible fade show')
             context = {
                 "poll": poll,
-                "messages": messages,
             }
             return redirect("polls:add_vote", poll.id)
         else: 

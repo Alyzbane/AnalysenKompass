@@ -19,17 +19,6 @@
     {% include 'polls/partials/radio_choice.html' %}
     </div>
     <div class="container-fluid">
-     
-{% if messages %}
-<div class="messages">
-    {% for message in messages %}
-    <strong {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</strong>
-    {% endfor %}
-</div>
-<br/>
-{% endif %}        
-
-
         {% if selected_choice_id is None and is_active %}
             <button type="submit" class="btn btn-success mt-3 align-self-end" id="submit-vote">Vote</button>
         {% elif is_active %}
