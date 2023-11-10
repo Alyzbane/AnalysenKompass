@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-
 {% load static %}
 {% block custom_css %}
 <link rel="stylesheet" href="{% static 'polls/css/choice.css' %}">
@@ -8,9 +7,20 @@
 {% block content %}
 <div class="container">
     <h1>{{ poll.text }}</h1>
-    <hr/>
+    <hr>
+    <div class="wrap" style="flex-grow: 1;">
+        <div role="navigation">
+        <div class="row">
+        {% if request.user == poll.survey.owner %}
         {% include 'polls/partials/dropdown_poll.html' %}
-    <hr/>
+        {% include 'polls/partials/navigation_poll.html' %}
+        {% else %}
+        {% include 'polls/partials/navigation_poll.html' %}
+        {% endif %}
+        </div>
+        </div>
+    </div>
+    <hr>
     <br/>
     <div id="form-choices">
 
@@ -24,7 +34,11 @@
         {% elif is_active %}
             <a class="btn btn-secondary mt-3 align-self-end" href="{% url 'polls:reset_vote' vote.pk %}" role="button">Reset Vote</a>
         {% endif %}
+        {% if poll.survey.owner == request.user %}
         <a class="btn btn-warning mt-3 align-self-end" href="{% url 'surveys:survey_detail' poll.survey.pk %}" role="button">Cancel</a>
+        {% else %}
+        <a class="btn btn-warning mt-3 align-self-end" href="{% url 'surveys:survey_index' %}" role="button">Return</a>
+        {% endif %}
     </div>
     </form>
 </div>

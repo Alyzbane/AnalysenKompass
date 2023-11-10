@@ -9,6 +9,11 @@ class Survey(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    class Meta:
+        indexes = [
+            models.Index(fields=['created_at']),
+            models.Index(fields=['title']),
+        ]
     def get_polls(self):
         return self.poll_set.all()
 

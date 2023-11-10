@@ -1,12 +1,36 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from django.db.models import Avg, Sum
+from django.views import generic
 from polls.models import Poll, Vote
 
 from .forms import SurveyAddForm
 from .models import Survey
 from common.utils.decorators import require_owner
+
+class SurveyListView(generic.ListView):
+    model = Survey
+    context_object_name = "surveys"
+    template_name = "surveys/index.html"
+    paginate_by = 10
+    queryset = Survey.objects.all().order_by('-created_at')
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        title_sort = self.request.GET.get('title')
+        created_at_sort = self.request.GET.get('created_at')
+        search_term = self.request.GET.get('search_term')
+
+        if title_sort:
+            queryset = queryset.order_by('title')
+        elif created_at_sort:
+            queryset = queryset.order_by('created_at')
+
+        if search_term:
+            queryset = queryset.filter(title__icontains=search_term)  # filter by 'title' field
+
+        return queryset
+
 @login_required
 def create_survey(request):
     if request.method == 'POST':
@@ -30,16 +54,6 @@ def survey_detail(request, survey_id):
     }
     return render(request, 'surveys/detail.html', context)
 
-@login_required()
-def survey_index(request):
-    if request.method == "POST":
-        pass
-
-    surveys = Survey.objects.all()
-    context = {
-        'surveys': surveys,
-    }
-    return render(request, 'surveys/index.html', context)
 
 @login_required
 @require_owner(Survey, 'survey_id')

@@ -1,5 +1,4 @@
 from django.shortcuts import render, get_object_or_404
-
 from polls.models import Poll
 
 def poll_detail(request, poll_id):

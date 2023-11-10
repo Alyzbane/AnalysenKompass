@@ -12,6 +12,25 @@ class Poll(models.Model):
     updated_at = models.DateTimeField(auto_now=True) 
     created_at = models.DateTimeField(auto_now_add=True)
 
+    
+    
+    ### Start of navigation data helper
+    ### Defines the data for navigation in the polls/partials/navigation.html
+    @classmethod
+    def get_next_poll(cls, survey_id, poll_id):
+        try:
+            next_poll = cls.objects.filter(survey_id=survey_id).filter(id__gt=poll_id).order_by('id')[0]
+            return next_poll.id
+        except IndexError:
+            return None
+    @classmethod
+    def get_previous_poll(cls, survey_id, poll_id):
+        try:
+            previous_poll = cls.objects.filter(survey_id=survey_id).filter(id__lt=poll_id).order_by('-id')[0]
+            return previous_poll.id
+        except IndexError:
+            return None
+
     def has_choices(self):
         return self.choice_set.exists()
 

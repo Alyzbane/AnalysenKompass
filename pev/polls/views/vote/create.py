@@ -12,11 +12,15 @@ def poll_vote(request, poll_id):
 
     poll = get_object_or_404(Poll, pk=poll_id)
     polls = Poll.objects.filter(survey=poll.survey)
-    current_poll_number = list(polls).index(poll) + 1
 
+    # get the data for dropdown navigation
+    current_poll_number = list(polls).index(poll) + 1
     user_voted = Vote.objects.filter(user=request.user, poll=poll).first()
     selected_choice_id = user_voted.choice.id if user_voted else None
-    is_active = poll.survey.active
+    next_poll_id = Poll.get_next_poll(poll.survey.id, poll.id)
+    previous_poll_id = Poll.get_previous_poll(poll.survey.id, poll.id)
+
+    is_active = poll.survey.active 
 
     context =  {
         "poll": poll,
@@ -25,6 +29,8 @@ def poll_vote(request, poll_id):
         "selected_choice_id": selected_choice_id,
         "vote": user_voted,
         "is_active": is_active,
+        "previous_poll_id": previous_poll_id,
+        "next_poll_id": next_poll_id,
     }
 
     if not poll.user_can_vote(request.user):

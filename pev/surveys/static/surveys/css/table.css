@@ -1,0 +1,19 @@
+@media screen and (max-width: 768px) {
+  .table-responsive .table td[data-toggle="tooltip"] {
+    display: inline-block;
+  }
+  .table-responsive th:nth-child(2), .table-responsive tbody tr td:nth-child(2) {
+    display: none;
+  }
+
+}
+
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
