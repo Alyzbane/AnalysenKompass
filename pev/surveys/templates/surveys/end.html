@@ -8,7 +8,6 @@
     <p> {{ survey.description }} </p>
     {% for poll in polls%}
     <p> {{ poll.text }} </p>
-    <li> {{ poll.choice_set.get_vote_count }} </li>
     {% endfor %}
     </div>
 </ul>

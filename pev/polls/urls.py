@@ -17,4 +17,5 @@ urlpatterns = [
     path('vote/start/<int:survey_id>/', views.vote_start, name="start_vote"),
     path('vote/<int:poll_id>/', views.poll_vote,  name="add_vote"),
     path('vote-edit/<int:vote_id>', views.vote_reset, name="reset_vote"),
+    path('vote/result-bar/<int:poll_id>', views.vote_bar_chart, name="vote_bar_chart"),
 ]
