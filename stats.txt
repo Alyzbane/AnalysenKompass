@@ -1,0 +1,49 @@
+### Flatting the list of queryset
+queryset.values_list(term_to_be_find, flat=True).order_by(term_...)
+
+
+### Getting the count of Choice in a specific poll
+poll = get_object_or_404(Poll, poll_id)
+Vote.objects.filter(poll=poll).values('choice').annotate(count=Count('choice'))
+
+### Getting the frequency along with its name 
+votes = Vote.objects.values('choice__text').filter(poll=poll).annotate(count=Count('choice'))
+
+mean = votes.aggregate(average=Avg('count')) ### getting the Mean
+### mean = {'average': n} get tit through mean['average']  dictionary
+
+votes.values_list('count', flat=True).order_by('choice') ## getting the flat queryset of choices count eg. [3,1,1] <- corresponds to choices count in that poll
+
+
+
+### getting the median
+def median_value(queryset, term):
+    count = queryset.count()
+    values = queryset.values_list(term, flat=True).order_by(term)
+    if count % 2 == 1:
+        return values[int(round(count/2))]
+    else:
+        return sum(values[count//2-1:count//2+1])/2.0
+
+
+ median_value(votes, 'count') ## getting the median 
+
+
+
+### getting the mode
+
+max(votes, key=lambda x: x['count'])['count'] ### will return the count number
+max(votes, key=lambda x: x['count'])['choice__text'] ### will return the text of mode
+
+
+
+### getting the variance
+import statistics
+data = votes.values_list('count', flat=True)
+
+statistics.pvariance(data, mean['average']) ## avoid recalculation, population
+statistics.variange(data, mean['average'])  ##  sample
+
+### getting the standard deviation
+statistics.pstdev(data, m['avg']) ## population
+statistics.stdev(data, m['avg']) ## sample
