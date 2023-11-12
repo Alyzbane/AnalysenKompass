@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views import generic
 from polls.models import Poll, Vote
 
@@ -55,21 +55,6 @@ def survey_detail(request, survey_id):
     return render(request, 'surveys/detail.html', context)
 
 
-@login_required
-@require_owner(Survey, 'survey_id')
-def survey_end(request, survey_id):
-    survey = get_object_or_404(Survey, pk=survey_id)
-    
-    survey.active = not survey.active
-    survey.save()
-    
-    context = {
-        'survey': survey,
-        'polls': survey.poll_set.all(),
-    }
-       
-    return render(request, 'surveys/end.html', context)
-
 
 @login_required
 @require_owner(Survey, 'survey_id')
@@ -96,17 +81,22 @@ def survey_delete(request, survey_id):
 
     return redirect("surveys:survey_index")
 
+@login_required
+@require_owner(Survey, 'survey_id')
+def survey_end(request, survey_id):
+    survey = get_object_or_404(Survey, pk=survey_id)
+    survey.active = not survey.active
+    survey.save()
+    return redirect("surveys:survey_index")
 
 @login_required
-def survey_report(request):
-    return render(request, 'chart.html')
-
-@login_required
-def survey_chart(request, survey_id):
+@require_owner(Survey, 'survey_id')
+def survey_report(request, survey_id):
     survey = get_object_or_404(Survey, pk=survey_id)
 
-    labels = []
-    data = []
-    
-    queryset = Vote.objects.filter(survey=survey)
-    
+    context = {
+        'survey': survey,
+        'polls': survey.poll_set.all(),
+    }
+ 
+    return render(request, 'surveys/results.html', context)

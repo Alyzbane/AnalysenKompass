@@ -18,6 +18,7 @@
             {% if survey.active %}
             <a class="btn btn-primary mt-3" href="{% url 'polls:add_poll' survey.pk %}" role="button">Create Poll</a>
             {% endif %}
+            <a class="btn btn-primary mt-3" href="{% url 'surveys:survey_results' survey.pk %}" role="button">View Result</a>
             {% endif %}
             <a class="btn btn-warning mt-3" href="{% url 'surveys:survey_index' %}" role="button">Back to Survey Index</a>
         </div>
