@@ -5,7 +5,7 @@
     <legend>{{ poll.text }}</legend>
     <div class="form-row align-items-center col-md-6 offset-md-3">
         <strong class="mr-3"> Choices: </strong>
- 
+        
         <button type="button" class="btn btn-success mr-2 btn-sm" 
                 hx-get="{% url 'polls:protocol_choice' poll.id %}" 
                 hx-target="#choice-forms" 
@@ -27,4 +27,5 @@
 </div>
 <br>
 {% include 'polls/partials/list_choice.html' %}
+
 {% endblock %}

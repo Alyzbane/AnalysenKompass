@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-
+from django.http import HttpResponse
 from polls.forms import ChoiceAddForm
 from polls.models import Poll
 from common.utils.decorators import require_owner
@@ -25,10 +25,8 @@ def create_choice(request, poll_id):
 def choice_protocol(request, poll_id):
     poll = get_object_or_404(Poll, pk=poll_id)
     choice_form = ChoiceAddForm(prefix="choice")
-
     if request.method == "POST":
         choice_form = ChoiceAddForm(request.POST, prefix="choice")
-
         if choice_form.is_valid():
             choice = choice_form.save(commit=False)
             choice.poll = poll
