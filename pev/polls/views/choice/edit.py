@@ -21,4 +21,4 @@ def choice_edit(request, choice_id):
             'form': form,
             'choice': choice
         }
-        return render(request, "polls/edit_choice.html", context)
+        return render(request, "polls/choice/edit.html", context)

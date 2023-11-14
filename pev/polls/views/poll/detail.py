@@ -14,7 +14,7 @@ def poll_detail(request, poll_id):
         'poll': poll,
         'loop_time': range(0, loop_count),
     }
-    return render(request, 'polls/poll_detail.html', context)
+    return render(request, 'polls/poll/detail.html', context)
 
     
 @login_required

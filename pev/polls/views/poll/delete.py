@@ -15,4 +15,4 @@ def poll_delete(request, poll_id):
        poll.delete()
        return redirect("surveys:survey_detail", survey_id)
    
-   return render(request, "polls/delete_poll.html", {"poll": poll})
+   return render(request, "polls/poll/delete.html", {"poll": poll})

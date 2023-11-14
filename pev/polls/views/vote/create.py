@@ -34,7 +34,7 @@ def poll_vote(request, poll_id):
     }
 
     if not poll.user_can_vote(request.user):
-        return render(request, "polls/poll_vote.html", context)
+        return render(request, "polls/vote/add.html", context)
 
     if is_active and request.method == "POST":
         try:
@@ -49,4 +49,4 @@ def poll_vote(request, poll_id):
             vote.save()
             return HttpResponseRedirect(reverse("polls:add_vote", args={poll.id}))
     else: 
-        return render(request, "polls/poll_vote.html", context)
+        return render(request, "polls/vote/add.html", context)

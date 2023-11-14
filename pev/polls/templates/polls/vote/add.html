@@ -11,12 +11,10 @@
     <div class="wrap" style="flex-grow: 1;">
         <div role="navigation">
         <div class="row">
-        {% if request.user == poll.survey.owner %}
         {% include 'polls/partials/dropdown_poll.html' %}
+        <div class="col-5 ml-3">
         {% include 'polls/partials/navigation_poll.html' %}
-        {% else %}
-        {% include 'polls/partials/navigation_poll.html' %}
-        {% endif %}
+        </div>
         </div>
         </div>
     </div>

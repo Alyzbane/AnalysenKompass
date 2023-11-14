@@ -14,5 +14,5 @@ def vote_start(request, survey_id):
        'first_poll':  first_poll, 
     }
 
-    return render(request, 'polls/start_vote.html', context)
+    return render(request, 'polls/vote/welcome.html', context)
 

@@ -17,7 +17,7 @@ def create_choice(request, poll_id):
         'choices': poll.choice_set.all(),
     }
 
-    return render(request, 'polls/add_choice.html', context)
+    return render(request, 'polls/choice/add.html', context)
 
 
 @login_required

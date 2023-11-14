@@ -25,5 +25,5 @@ def polls_edit(request, poll_id):
     else:
         form = PollEditForm(instance=poll)
 
-    return render(request, "polls/poll_edit.html", {'form': form, 'poll': poll})
+    return render(request, "polls/poll/edit.html", {'form': form, 'poll': poll})
 

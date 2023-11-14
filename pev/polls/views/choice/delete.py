@@ -20,4 +20,4 @@ def choice_delete(request, choice_id):
         'choice': choice,
         'poll_id': poll_id
     }
-    return render(request, "polls/delete_choice.html", context)
+    return render(request, "polls/choice/delete.html", context)

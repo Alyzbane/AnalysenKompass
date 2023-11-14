@@ -5,6 +5,7 @@
                 Poll {{ current_poll_number }}
                 </button>
                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                 <h6 class="dropdown-header"> Polls </h6>
                 {% for poll in polls %}
                     <a class="dropdown-item" href="{% url 'polls:add_vote' poll.pk %}">{{ poll.text }}</a>
                 {% endfor %}

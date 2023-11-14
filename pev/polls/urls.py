@@ -13,6 +13,7 @@ urlpatterns = [
     path('result/<int:poll_id>/', views.poll_result, name='result_poll'),
     path('add-choice/<int:poll_id>/', views.create_choice, name='add_choice'),
     path('add-choice-clone/<int:poll_id>/', views.choice_protocol,  name="protocol_choice"),
+    path('detail/choices/<int:poll_id>/', views.choices_list, name="list_choice"),
     path('edit/choice/<int:choice_id>/', views.choice_edit, name="edit_choice"),
     path('delete/choice/<int:choice_id>/', views.choice_delete, name="delete_choice"),
     path('vote/start/<int:survey_id>/', views.vote_start, name="start_vote"),

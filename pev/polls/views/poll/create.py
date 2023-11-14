@@ -34,5 +34,5 @@ def polls_add(request, survey_id):
         'survey': survey,
     }
 
-    return render(request, 'polls/add_poll.html', context)
+    return render(request, 'polls/poll/add.html', context)
 
