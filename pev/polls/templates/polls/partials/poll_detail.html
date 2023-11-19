@@ -1,7 +1,7 @@
 {% for poll in polls %}
 <ul class="list-group">
     <li class="list-group-item">
-        <a href="{% url 'polls:add_vote' poll.pk %}">{{ poll.text }}</a>
+        <a href="{% url 'polls:page_view' poll.pk %}">{{ poll.text }}</a>
     {% if not request.user %}
         <i class="fas fa-check-circle ml-2"></i>
     {% endif %} 

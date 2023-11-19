@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-center">
 
 <div class="col-auto">
-<a class="btn btn-outline-info btn-lg active" href="{% url 'polls:add_vote' polls.first.id %}" role="button"  aria-pressed="true">
+<a class="btn btn-outline-info btn-lg active" href="{% url 'polls:page_view' polls.first.id %}" role="button"  aria-pressed="true">
     Page View 
 </a>
 <a class="btn btn-outline-info btn-lg active" href="{% url 'polls:scroll_view' survey.id %}" role="button" aria-pressed="true">

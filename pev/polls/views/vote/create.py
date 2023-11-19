@@ -43,11 +43,11 @@ def poll_vote(request, poll_id):
             context = {
                 "poll": poll,
             }
-            return redirect("polls:add_vote", poll.id)
+            return redirect("polls:page_view", poll.id)
         else: 
             vote = Vote(user=request.user, survey=poll.survey, poll=poll, choice=choice)
             vote.save()
-            return HttpResponseRedirect(reverse("polls:add_vote", args={poll.id}))
+            return HttpResponseRedirect(reverse("polls:page_view", args={poll.id}))
     else: 
         return render(request, "polls/vote/view_page.html", context)
 

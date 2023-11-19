@@ -13,7 +13,7 @@ def vote_reset(request, vote_id):
     poll_id = vote.poll.id
 
     if request.method == "POST":
-        return HttpResponseRedirect(reverse("polls:add_vote", args={poll_id}))
+        return HttpResponseRedirect(reverse("polls:page_view", args={poll_id}))
 
     vote.delete()
-    return redirect("polls:add_vote", poll_id)
+    return redirect("polls:page_view", poll_id)

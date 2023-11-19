@@ -5,7 +5,7 @@
     <h1>{{ survey.title }}</h1>
     <p>{{ survey.description }}</p>
     <form>
-     <a class="btn btn-secondary mt-3 align-self-end" href="{% url 'polls:add_vote' first_poll.id %}" role="button">Start</a>
+     <a class="btn btn-secondary mt-3 align-self-end" href="{% url 'polls:page_view' first_poll.id %}" role="button">Start</a>
     </form>
 </div>
 {% endblock %}

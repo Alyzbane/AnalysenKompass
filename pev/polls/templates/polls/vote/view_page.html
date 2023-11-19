@@ -18,7 +18,7 @@
     <hr>
     <br/>
     <div id="form-choices">
-    <form method="post" action="{% url 'polls:add_vote' poll.pk %}">
+    <form method="post" action="{% url 'polls:page_view' poll.pk %}">
     {% csrf_token %}  
     {% include 'polls/partials/radio_choice.html' %}
     </div>
