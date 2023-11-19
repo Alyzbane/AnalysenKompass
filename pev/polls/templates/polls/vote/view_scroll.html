@@ -1,0 +1,32 @@
+{% extends 'view_mode.html' %}
+
+{% block content %}
+
+<div class="container">
+<form hx-post="{% url 'polls:submit_choices' %}" hx-trigger="submit" hx-target="#survey_result">
+    {% for poll in polls %}
+        <h2>{{ poll.text }}</h2>
+        {% for key, choice_sets in choices.items %}
+            <div class="row">
+            {% for choice in choice_sets %}
+            <div class="col-4">
+            <label>
+                <input type="radio" name="poll_{{ poll.id }}" value="{{ choice.id }}">
+                {{ choice.text }}
+            </label><br>
+            </div>
+
+            {% endfor %}
+            </div>
+
+        {% endfor %}
+        <input type="hidden" name="poll_ids[]" value="{{ poll.id }}">
+        <br><br>
+    {% endfor %}
+    <button type="submit">Submit Choices for All Polls</button>
+</form>
+
+<div id="survey_result"></div>
+
+</div>
+{% endblock content %}

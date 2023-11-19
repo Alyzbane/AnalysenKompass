@@ -17,6 +17,8 @@ urlpatterns = [
     path('edit/choice/<int:choice_id>/', views.choice_edit, name="edit_choice"),
     path('delete/choice/<int:choice_id>/', views.choice_delete, name="delete_choice"),
     path('vote/start/<int:survey_id>/', views.vote_start, name="start_vote"),
+    path('vote/scroll/<int:survey_id>/', views.vote_scroll, name="scroll_view"),
+    path('vote/submit_choices/', views.submit_choices, name="submit_choices"),
     path('vote/<int:poll_id>/', views.poll_vote,  name="add_vote"),
     path('vote-edit/<int:vote_id>', views.vote_reset, name="reset_vote"),
 ]

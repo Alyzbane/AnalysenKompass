@@ -1,28 +1,25 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block custom_css %}
-<link rel="stylesheet" href="{% static 'polls/css/choice.css' %}">
-{% endblock custom_css %}
-
+{% extends "view_mode.html" %}
 {% block content %}
+
 <div class="container">
     <h1>{{ poll.text }}</h1>
+
     <hr>
     <div class="wrap" style="flex-grow: 1;">
         <div role="navigation">
-        <div class="row">
-        {% include 'polls/partials/dropdown_poll.html' %}
-        <div class="col-5 ml-3">
-        {% include 'polls/partials/navigation_poll.html' %}
-        </div>
-        </div>
+            <div class="row">
+              {% include 'polls/partials/dropdown_poll.html' %}
+                <div class="col-5 ml-3">
+                    {% include 'polls/partials/navigation_poll.html' %}
+                </div>
+               
+            </div>
         </div>
     </div>
     <hr>
     <br/>
     <div id="form-choices">
-
-<form method="post" action="{% url 'polls:add_vote' poll.pk %}">
+    <form method="post" action="{% url 'polls:add_vote' poll.pk %}">
     {% csrf_token %}  
     {% include 'polls/partials/radio_choice.html' %}
     </div>

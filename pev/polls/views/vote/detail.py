@@ -16,3 +16,16 @@ def vote_start(request, survey_id):
 
     return render(request, 'polls/vote/welcome.html', context)
 
+@login_required
+def vote_scroll(request, survey_id):
+    survey = Survey.objects.get(pk=survey_id)
+    polls = survey.poll_set.all()
+    choices = {poll.id: poll.choice_set.all() for poll in polls}
+
+    context = {
+      'survey': survey,
+      'polls': polls,
+      'choices': choices,
+    }
+
+    return render(request, 'polls/vote/view_scroll.html', context)

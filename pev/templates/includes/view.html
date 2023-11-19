@@ -1,0 +1,8 @@
+<ul class="nav nav-pills nav-fill">
+      <li class="nav-item">
+            <a class="nav-link" role="button" name="scroll" href="{% url 'polls:scroll_view' survey.id %}">Scroll View</a>
+      </li>
+      <li class="nav-item">
+            <a class="nav-link" role="button" name="page" href="{% url 'polls:start_vote' survey.id %}">Page View</a>
+      </li>
+</ul>
