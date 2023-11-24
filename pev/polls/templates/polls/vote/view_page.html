@@ -11,7 +11,7 @@
                 <div class="col-5 ml-3">
                     {% include 'polls/partials/navigation_poll.html' %}
                 </div>
-               
+
             </div>
         </div>
     </div>
@@ -19,14 +19,14 @@
     <br/>
     <div id="form-choices">
     <form method="post" action="{% url 'polls:page_view' poll.pk %}">
-    {% csrf_token %}  
+    {% csrf_token %}
     {% include 'polls/partials/radio_choice.html' %}
     </div>
     <div class="container-fluid">
         {% if selected_choice_id is None and is_active %}
-            <button type="submit" class="btn btn-success mt-3 align-self-end" id="submit-vote">Vote</button>
+            <button type="submit" class="btn btn-success mt-3 align-self-end" id="submit-vote">Submit</button>
         {% elif is_active %}
-            <a class="btn btn-secondary mt-3 align-self-end" href="{% url 'polls:reset_vote' vote.pk %}" role="button">Reset Vote</a>
+            <a class="btn btn-secondary mt-3 align-self-end" href="{% url 'polls:reset_vote' vote.pk %}" role="button">Reset</a>
         {% endif %}
         {% if poll.survey.owner == request.user %}
         <a class="btn btn-warning mt-3 align-self-end" href="{% url 'surveys:survey_detail' poll.survey.pk %}" role="button">Cancel</a>

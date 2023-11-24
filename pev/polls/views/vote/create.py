@@ -19,7 +19,7 @@ def poll_vote(request, poll_id):
     next_poll_id = Poll.get_next_poll(poll.survey.id, poll.id)
     previous_poll_id = Poll.get_previous_poll(poll.survey.id, poll.id)
 
-    is_active = poll.survey.active 
+    is_active = poll.survey.active
 
     context =  {
         "survey": poll.survey,
@@ -44,11 +44,11 @@ def poll_vote(request, poll_id):
                 "poll": poll,
             }
             return redirect("polls:page_view", poll.id)
-        else: 
+        else:
             vote = Vote(user=request.user, survey=poll.survey, poll=poll, choice=choice)
             vote.save()
             return HttpResponseRedirect(reverse("polls:page_view", args={poll.id}))
-    else: 
+    else:
         return render(request, "polls/vote/view_page.html", context)
 
 
@@ -67,12 +67,15 @@ def submit_choices(request):
     # Fetch choice data based on selected choice IDs
     selected_choices_data = []
     for poll_id, choice_id in selected_choices.items():
-        choice = Choice.objects.get(pk=choice_id)
+        poll = Poll.objects.get(pk=poll_id)
+        vote = Vote(user=request.user, survey=poll.survey, poll_id=poll_id, choice_id=choice_id)
+        vote.save()
+
         selected_choices_data.append({
             'poll_id': poll_id,
             'choice_id': choice_id,
-            'choice_text': choice.text,
         })
 
+    # return HttpResponseRediret(reverse('survey:end_thanks'))
     # Return the data in JsonResponse
     return JsonResponse({'message': 'Choices submitted successfully', 'selected_choices': selected_choices_data})

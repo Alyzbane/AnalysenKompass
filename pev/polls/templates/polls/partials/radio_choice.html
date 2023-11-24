@@ -3,12 +3,13 @@
     {% for choice in poll.choice_set.all %}
     <label class="custom-radio">
         <input type="radio" class="list-group-items" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"
-            {% if selected_choice_id == choice.id %} 
+            {% if selected_choice_id == choice.id %}
             checked
             {% endif %}
-            {% if selected_choice_id or not is_active %}  
-            disabled 
-            {% endif %}>
+            {% if selected_choice_id or not is_active %}
+            disabled
+            {% endif %}
+            >
         {{ choice.text }}
     </label>
     <br />
