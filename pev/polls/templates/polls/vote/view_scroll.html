@@ -33,7 +33,7 @@
 		{% if not is_valid %}
 		    <button type="submit" class="btn btn-success mt-3 align-self-end">Submit All</button>
 	    {% else %}
-		    <a class="btn btn-secondary align-self-end" href="#" role="button"}>Reset</a>
+		    <a class="btn btn-secondary align-self-end" href="{% url 'polls:scroll_reset' %}" role="button"}>Reset</a>
 		{% endif %}
 		</div>
 	</form>
