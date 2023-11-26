@@ -28,8 +28,9 @@ def poll_result(request, poll_id):
    # Define the data in othe chart
    fig = go.Figure(
        data=[go.Bar(x=labels, y=data)],
-       layout_title_text=poll.text
+       layout_title_text=poll.text,
    )
+
 
    chart = plot(
        fig,

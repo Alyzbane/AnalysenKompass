@@ -19,6 +19,7 @@ class Survey(models.Model):
 
     def is_owner(self, user):
        return self.owner == user 
+    
 
     def get_mean(self):
         return self.poll_set.count()

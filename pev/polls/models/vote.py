@@ -42,6 +42,11 @@ class Vote(models.Model):
     def get_choice_sets(self):
         return Choice.objects.filter()
 
+    @classmethod
+    def survey_complete(cls, user, survey_id):
+        polls = Poll.objects.filter(survey_id=survey_id)
+        user_votes = cls.objects.filter(user=user, poll__in=polls)
+        return polls.count() == user_votes.count()
 
     def selected_choice(self):
         return self.choice

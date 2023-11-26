@@ -1,7 +1,9 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django.views import generic
+
 from polls.models import Poll, Vote
 
 from .forms import SurveyAddForm
@@ -100,3 +102,11 @@ def survey_report(request, survey_id):
     }
  
     return render(request, 'surveys/results.html', context)
+
+
+@login_required
+def survey_complete(request):
+    if request.method == "POST":
+        return HttpResponseRedirect(reverse("surveys:survey_index"))
+    
+    return render(request, "surveys/complete.html")
