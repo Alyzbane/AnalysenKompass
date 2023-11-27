@@ -15,8 +15,8 @@ Poll System Evaluation
 <h2>Addon Features?</h2>
 <hr>
 <ul>
-<li>Vote Scroll View<br/>
-- Reset Vote</li>
+<li>Vote Scroll View</li><br/>
+<strike>- Reset Vote</strike>
 <li>Soft Delete</li>
 <li>Fix some unnecessary texts in htmls'</li>
 </ul>

@@ -1,15 +1,21 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<script src="https://cdn.plot.ly/plotly-2.27.0.min.js" charset="utf-8"></script>
+<!-- JS plotly -->
+<script src="https://cdn.plot.ly/plotly-cartesian-2.27.1.min.js" charset="utf-8"></script>
+
+{% load cache %}
 <ul>
     <div class="form-container">
     <h2> {{ survey.title }} </h2>
     <p> {{ survey.description }} </p>
+    {% cache 500 poll-chart %}
     {% for poll in polls %}
         <div id="poll-chart" hx-get="{% url 'polls:result_poll' poll.pk %}" hx-trigger="load"></div> 
     {% endfor %}
     </div>
 
 </ul>
+{% endcache %}
+
 {% endblock %}
