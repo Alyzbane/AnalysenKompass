@@ -1,10 +1,11 @@
 from django.db import models
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.contrib.auth.models import User
-from django.db.models import Q
 from . import Poll, Choice
 
 from surveys.models import Survey
+
+from datetime import date, timedelta
 
 class Vote(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -22,25 +23,39 @@ class Vote(models.Model):
         ]
 
     @classmethod
-    def get_plot_dic(cls, poll_id, sex=None, birthdate=None):
-        # Define all of the choices to be read for labels
-        choices = Poll.objects.filter(pk=poll_id).values_list('choice__text', flat=True)
+    def get_plot_dict(cls, poll_id, age_range=None, sex=None):
+        filter_conditions = cls._build_filter_conditions(poll_id, age_range, sex)
+        choices = cls._get_choices(poll_id)
+        votes = cls._get_votes(filter_conditions)
+        data = cls._calculate_plot_data(choices, votes)
+        return data
 
-        # Use Q objects to dynamically construct the queryset with optional filters
+    @classmethod
+    def _build_filter_conditions(cls, poll_id, age_range, sex):
         filter_conditions = Q(poll_id=poll_id)
-        if birthdate:
-            filter_conditions &= Q(user__profile__birthdate=birthdate)
+
+        if age_range:
+            min_birthdate = date.today() - timedelta(days=(365 * age_range))
+            filter_conditions &= Q(user__profile__birthdate__lte=min_birthdate)
+
         if sex:
             filter_conditions &= Q(user__profile__sex=sex)
-            
-        # Define the choices and its votes in the poll
+
+        return filter_conditions
+
+    @classmethod
+    def _get_choices(cls, poll_id):
+        choices = Poll.objects.filter(pk=poll_id).values_list('choice__text', flat=True)
+        return choices
+
+    @classmethod
+    def _get_votes(cls, filter_conditions):
         votes = cls.objects.filter(filter_conditions).values('choice__text').annotate(count=Count('choice'))
+        return {item['choice__text']: item['count'] for item in votes}
 
-        # Define the easy lookup for the missing item in the votes
-        vote_count_dict = {item['choice__text']: item['count'] for item in votes}
-
-        data = [(choice, vote_count_dict.get(choice, 0)) for choice in choices]
-
+    @classmethod
+    def _calculate_plot_data(cls, choices, votes):
+        data = [(choice, votes.get(choice, 0)) for choice in choices]
         return data
 
     def get_choice_sets(self):
