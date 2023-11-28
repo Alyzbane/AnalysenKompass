@@ -6,9 +6,11 @@ Poll System Evaluation
 <ul>
 <li>Data Consolidation<br>
 - Dashboard Layout per survey
+<strke>Data filtering modules</strke>
 </li>
 <li>Privilege owner acount</li>
 <li>User can only answer the survey</li>
+
 
 </ul>
 <hr>
