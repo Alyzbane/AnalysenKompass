@@ -1,6 +1,5 @@
-<div class="vh-100 d-flex justify-content-center align-items-center p-5" id="profile-content">
-    <div class="col-md-5 p-5 shadow-sm border rounded-5 border-primary bg-white">
-        <h2 class="text-center mb-4 text-primary">Profile</h2>
+<div class="d-flex justify-content-center align-items-center p-5" id="profile-content">
+        <h2 class="text mb-4 text-primary">Information:</h2>
         <form action="" method="post">
             {% csrf_token %}
             {{ form.as_p }}
@@ -8,5 +7,4 @@
                 <button class="btn btn-primary" type="submit">Save</button>
             </div>
         </form>
-    </div>
 </div>

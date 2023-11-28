@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Count
 from django.contrib.auth.models import User
+from django.db.models import Q
 from . import Poll, Choice
 
 from surveys.models import Survey
@@ -21,21 +22,24 @@ class Vote(models.Model):
         ]
 
     @classmethod
-    def get_plot_dic(cls, poll_id):
+    def get_plot_dic(cls, poll_id, sex=None, birthdate=None):
         # Define all of the choices to be read for labels
         choices = Poll.objects.filter(pk=poll_id).values_list('choice__text', flat=True)
 
+        # Use Q objects to dynamically construct the queryset with optional filters
+        filter_conditions = Q(poll_id=poll_id)
+        if birthdate:
+            filter_conditions &= Q(user__profile__birthdate=birthdate)
+        if sex:
+            filter_conditions &= Q(user__profile__sex=sex)
+            
         # Define the choices and its votes in the poll
-        votes = cls.objects.filter(poll_id=poll_id).values('choice__text').annotate(count=Count('choice'))
+        votes = cls.objects.filter(filter_conditions).values('choice__text').annotate(count=Count('choice'))
 
         # Define the easy lookup for the missing item in the votes
-        vote_count_dic = {item['choice__text']: item['count'] for item in votes}
+        vote_count_dict = {item['choice__text']: item['count'] for item in votes}
 
-        data = []
-        for choice in choices:
-        # Define the choices without votes with 0 value
-            count = vote_count_dic.get(choice, 0)
-            data.append((choice, count))
+        data = [(choice, vote_count_dict.get(choice, 0)) for choice in choices]
 
         return data
 

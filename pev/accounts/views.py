@@ -85,4 +85,8 @@ def profile_user(request):
             return HttpResponseRedirect(reverse('accounts:login'))
     else:
         form =  ProfileForm(instance=request.user.profile)
-    return render(request, 'accounts/profile/update.html', {'form': form})
+    return render(request, 'accounts/profile/detail.html', {'form': form})
+
+@login_required
+def profile_update(request):
+    pass

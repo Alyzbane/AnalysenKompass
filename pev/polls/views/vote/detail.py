@@ -53,7 +53,7 @@ def vote_scroll(request, survey_id):
     choices = {poll.id: poll.choice_set.all() for poll in polls}
 
     # Identifiyng the existing choice_id in Vote table
-    selected_choices = Vote.objects.filter(survey_id=survey_id).values('choice_id')
+    selected_choices = Vote.objects.filter(user=request.user, survey_id=survey_id).values('choice_id')
     selected_choices = selected_choices.values_list('choice_id', flat=True)
 
     is_active = survey.active

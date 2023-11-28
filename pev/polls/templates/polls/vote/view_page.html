@@ -37,9 +37,9 @@
             <a class="btn btn-secondary mt-3 align-self-end" href="{% url 'polls:reset_vote' vote.pk %}" role="button">Reset</a>
         {% endif %}
         {% if poll.survey.owner == request.user %}
-        <a class="btn btn-warning mt-3 align-self-end" href="{% url 'surveys:survey_detail' poll.survey.pk %}" role="button">Back</a>
+            <a class="btn btn-warning mt-3 align-self-end" href="{% url 'surveys:survey_detail' poll.survey.pk %}" role="button">Back</a>
         {% else %}
-        <a class="btn btn-warning mt-3 align-self-end" href="{% url 'surveys:survey_index' %}" role="button">Return</a>
+            <a class="btn btn-warning mt-3 align-self-end" href="{% url 'surveys:survey_index' %}" role="button">Back</a>
         {% endif %}
     </div>
     </form>

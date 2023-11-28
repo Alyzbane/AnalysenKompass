@@ -22,6 +22,8 @@ def vote_reset(request, vote_id):
 @login_required
 def scroll_reset(request, survey_id):
     vote = Vote.objects.filter(user=request.user, survey_id=survey_id)
+    if vote is None:
+        return HttpResponseForbidden("Error: You cannot do that")
 
     if request.user != vote.first().user:
         return HttpResponseForbidden("You don't have permission to do this!")     

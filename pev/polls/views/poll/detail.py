@@ -24,7 +24,7 @@ def poll_result(request, poll_id):
     poll = get_object_or_404(Poll, pk=poll_id)
    
     # Define the raw datas for display
-    votes_data = Vote.get_plot_dic(poll_id)
+    votes_data = Vote.get_plot_dic(poll_id, )
     labels, data = zip(*votes_data)
 
     # Define the data in othe chart

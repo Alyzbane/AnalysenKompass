@@ -28,4 +28,5 @@ class ProfileForm(forms.ModelForm):
             'sex': forms.Select(attrs={'class': 'form-control'}),
             'birthdate': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+#            'sex': forms.RadioSelect(choices=Profile.SEX_CHOICES),
         }

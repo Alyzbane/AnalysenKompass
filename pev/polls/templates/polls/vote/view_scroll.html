@@ -35,10 +35,15 @@
 		{% endif %}
 
 		{% if not is_valid %}
-		    <button type="submit" class="btn btn-success mt-3 align-self-end">Submit All</button>
+		    <button type="submit" class="btn btn-success align-self-end">Submit All</button>
 	    {% else %}
 		    <a class="btn btn-secondary align-self-end" href="{% url 'polls:scroll_reset' survey.pk %}" role="button"}>Reset</a>
 		{% endif %}
+		{% if survey.owner == request.user %}
+            <a class="btn btn-warning align-self-end" href="{% url 'surveys:survey_detail' survey.pk %}" role="button">Back</a>
+        {% else %}
+            <a class="btn btn-warning align-self-end" href="{% url 'surveys:survey_index' %}" role="button">Back</a>
+        {% endif %}
 		</div>
 	</form>
 

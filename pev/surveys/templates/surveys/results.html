@@ -4,6 +4,13 @@
 <!-- JS plotly -->
 <script src="https://cdn.plot.ly/plotly-cartesian-2.27.1.min.js" charset="utf-8"></script>
 
+
+<div class="container-fluid">
+<div class="d-flex justify-content-end">
+    <a role="button" href={% url 'surveys:survey_detail' survey.pk %} class="btn btn-secondary">Back</a>
+</div>
+
+
 <ul>
     <div class="form-container">
     <h2> {{ survey.title }} </h2>
@@ -12,7 +19,7 @@
         <div id="poll-chart" hx-get="{% url 'polls:result_poll' poll.pk %}" hx-trigger="load"></div> 
     {% endfor %}
     </div>
-
 </ul>
+</div>
 
 {% endblock %}
