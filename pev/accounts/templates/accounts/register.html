@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
+<div class="container-fluid">
     <div class="row center">
         <div class="col-md-5 mx-auto p-5 shadow-sm border rounded border-primary">
             <p>Already have an account? <a href="{% url 'accounts:login' %}">Login Here</a></p>
@@ -10,7 +10,7 @@
                 {% for message in messages %}
                 <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 {% endfor %}
@@ -18,7 +18,28 @@
             {% endif %}
             <form action="" method="POST">
                 {% csrf_token %}
-                {{ form.as_p }}
+                <div class="row">
+                    <div class="col">
+                        {{ form.username.label_tag }} {{ form.username }}
+                        <label>{{ form.sex.label }}</label>
+                        {% for choice in form.sex %}
+                            <div class="form-check">
+                                {{ choice.tag }} {{ choice.choice_label }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="col">
+                        {{ form.email.label_tag }} {{ form.email }}
+                        {{ form.birthdate.label_tag }} {{ form.birthdate }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        {{ form.password1.label_tag }} {{ form.password1 }}
+                        {{ form.password2.label_tag }} {{ form.password2 }}
+                    </div>
+                </div>
+                <br/>
                 <button type="submit" class="btn btn-primary">Sign Up</button>
             </form>
         </div>
