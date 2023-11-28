@@ -5,8 +5,8 @@ Poll System Evaluation
 <b>Prioritiy High to Low</b>
 <ul>
 <li>Data Consolidation<br>
-- Dashboard Layout per survey
-<strke>Data filtering modules</strke>
+- Dashboard Layout per survey<br>
+- <strike>Data filtering modules</strike>
 </li>
 <li>Privilege owner acount</li>
 <li>User can only answer the survey</li>
