@@ -30,6 +30,11 @@ class ChoiceAdmin(admin.ModelAdmin):
 
 @admin.register(Vote)
 class VoteAdmin(admin.ModelAdmin):
-    list_display = ["choice", "poll", "user", 'created_at']
-    search_fields = ["choice__choice_text", "poll__poll_text", "user__username"]
+    def choice_text(self, obj):
+        return obj.original_choice_text if obj.original_choice_text else 'N/A'
+
+    choice_text.short_description = 'Choice'  # Optional
+
+    list_display = ["choice_text", "poll", "user", 'created_at']
+    search_fields = ["choice_text", "poll__poll_text", "user__username"]
     autocomplete_fields = ["choice", "poll", "user"]

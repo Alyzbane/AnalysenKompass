@@ -11,8 +11,6 @@ def choice_delete(request, choice_id):
     poll_id = choice.poll.id
 
     if request.method == "POST":
-        votes = choice.vote_set.all()
-        votes.delete()
         choice.delete()
         return redirect('polls:edit_poll', poll_id)
 
