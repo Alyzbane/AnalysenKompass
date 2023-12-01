@@ -11,7 +11,8 @@ class Vote(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE)
     poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
-    choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
+    choice = models.ForeignKey(Choice, on_delete=models.SET_NULL, null=True)
+    original_choice_text = models.CharField(max_length=255, blank=True, unique=True, editable=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -45,27 +46,36 @@ class Vote(models.Model):
 
     @classmethod
     def _get_choices(cls, poll_id):
-        choices = Poll.objects.filter(pk=poll_id).values_list('choice__text', flat=True)
-        return choices
+        choices_texts = Choice.objects.filter(poll_id=poll_id).values_list('text', flat=True)
+        original_choice_texts = cls.objects.filter(poll_id=poll_id).values_list('original_choice_texts', flat=True)
+        return set(list(choices_texts) + list(original_choice_texts))
 
     @classmethod
     def _get_votes(cls, filter_conditions):
-        votes = cls.objects.filter(filter_conditions).values('choice__text').annotate(count=Count('choice'))
-        return {item['choice__text']: item['count'] for item in votes}
+        votes = cls.objects.filter(filter_conditions).values('original_choice_text').annotate(count=Count('original_choice_text'))
+        return {item['original_choice_text']: item['count'] for item in votes}
 
     @classmethod
     def _calculate_plot_data(cls, choices, votes):
         data = [(choice, votes.get(choice, 0)) for choice in choices]
-        return data
 
-    def get_choice_sets(self):
-        return Choice.objects.filter()
+        for original_choice_text in votes.keys():
+            if original_choice_text not in choices:
+                data.append((original_choice_text, votes[original_choice_text]))
+
+        return data
 
     @classmethod
     def survey_complete(cls, user, survey_id):
         polls = Poll.objects.filter(survey_id=survey_id)
         user_votes = cls.objects.filter(user=user, poll__in=polls)
         return polls.count() == user_votes.count()
+
+    # override the save method for original choice
+    def save(self, *args, **kwargs):
+        if not self.original_choice_text:
+            self.original_choice_text = self.choice.text
+        super().save(*args, **kwargs)
 
     def selected_choice(self):
         return self.choice
