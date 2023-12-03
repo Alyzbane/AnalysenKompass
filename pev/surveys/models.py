@@ -14,6 +14,10 @@ class Survey(models.Model):
             models.Index(fields=['created_at']),
             models.Index(fields=['title']),
         ]
+    
+    def has_votes(self):
+        return self.vote_set.exists()
+
     def get_polls(self):
         return self.poll_set.all()
 

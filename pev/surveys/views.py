@@ -49,10 +49,11 @@ def create_survey(request):
 def survey_detail(request, survey_id):
     survey = get_object_or_404(Survey, pk=survey_id)
     polls = Poll.objects.filter(survey=survey)
-
+    survey_has_votes = survey.has_votes()
     context = {
         'survey': survey,
         'polls': polls,
+        'survey_has_votes': survey_has_votes,
     }
     return render(request, 'surveys/detail.html', context)
 
@@ -74,7 +75,6 @@ def survey_edit(request, survey_id):
         }
 
         return render(request, 'surveys/edit.html', context)
-
 
 @login_required
 @require_owner(Survey, 'survey_id')

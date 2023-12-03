@@ -6,8 +6,10 @@
         <i class="fas fa-check-circle ml-2"></i>
     {% endif %} 
     {% if request.user == poll.survey.owner %}
-    {% if not poll.survey.active %}
+    {% if not poll.survey.active and not poll.has_votes %}
         <a href="{% url 'polls:edit_poll' poll.id %}" class="mr-3" data-toggle="tooltip" data-placement="top" title="Edit Poll"><i class="fas fa-pencil-alt float-right btn btn-primary btn-sm mr-1"></i></a>
+    {% endif %}
+    {% if not poll.survey.active %}
         <a href="{% url 'polls:delete_poll' poll.id %}" class="mr-3" data-toggle="tooltip" data-placement="top" title="Delete Poll"><i class="fas fa-trash-alt float-right btn btn-danger btn-sm mr-1"></i></a>
     {% endif %}
     {% endif %}

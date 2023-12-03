@@ -47,6 +47,10 @@ class Poll(models.Model):
     @property
     def get_vote_count(self):
         return self.vote_set.count()
+    
+    @property
+    def has_votes(self):
+        return self.vote_set.exists()
 
     def __str__(self):
        return self.text
