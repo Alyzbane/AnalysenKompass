@@ -24,22 +24,26 @@ class Vote(models.Model):
         ]
 
     @classmethod
-    def get_plot_dict(cls, poll_id, age_range=None, sex=None):
-        filter_conditions = cls._build_filter_conditions(poll_id, age_range, sex)
+    def get_plot_dict(cls, poll_id, min_age=None, max_age=None, sex=None):
+        filter_conditions = cls._build_filter_conditions(poll_id, min_age, max_age, sex)
         choices = cls._get_choices(poll_id)
         votes = cls._get_votes(filter_conditions)
         data = cls._calculate_plot_data(choices, votes)
         return data
 
     @classmethod
-    def _build_filter_conditions(cls, poll_id, age_range, sex):
+    def _build_filter_conditions(cls, poll_id, min_age=None, max_age=None, sex=None):
         filter_conditions = Q(poll_id=poll_id)
 
-        if age_range:
-            min_birthdate = date.today() - timedelta(days=(365 * age_range))
+        if min_age is not None:
+            min_birthdate = date.today() - timedelta(days=(365 * min_age))
             filter_conditions &= Q(user__profile__birthdate__lte=min_birthdate)
 
-        if sex:
+        if max_age is not None:
+            max_birthdate = date.today() - timedelta(days=(365 * max_age))
+            filter_conditions &= Q(user__profile__birthdate__gte=max_birthdate)
+
+        if sex is not None:
             filter_conditions &= Q(user__profile__sex=sex)
 
         return filter_conditions
@@ -69,7 +73,7 @@ class Vote(models.Model):
         polls = Poll.objects.filter(survey_id=survey_id)
         user_votes = cls.objects.filter(user=user, poll__in=polls)
         return polls.count() == user_votes.count()
-
+    
     # override the save method for original choice
     def save(self, *args, **kwargs):
         if not self.original_choice_text:

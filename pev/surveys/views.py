@@ -1,24 +1,36 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.views import generic
 
 from polls.models import Poll, Vote
-
+from common.utils.decorators import require_owner
 from .forms import SurveyAddForm
 from .models import Survey
-from common.utils.decorators import require_owner
 
-class SurveyListView(generic.ListView):
+class SurveyListView(LoginRequiredMixin, generic.ListView):
+    """
+    Define the index view of managing the created survey
+    Args:
+        LoginRequiredMixin (_type_): _description_
+        generic (_type_): _description_
+
+    Returns:
+        surveys: user created survey only
+    """
     model = Survey
     context_object_name = "surveys"
     template_name = "surveys/index.html"
     paginate_by = 10
-    queryset = Survey.objects.all().order_by('-created_at')
+
+    def dispatch(self, request, *args, **kwargs):
+        self.request = request
+        return super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = Survey.objects.filter(owner=self.request.user).order_by('-created_at')
         title_sort = self.request.GET.get('title')
         created_at_sort = self.request.GET.get('created_at')
         search_term = self.request.GET.get('search_term')
@@ -46,6 +58,7 @@ def create_survey(request):
         return render(request, 'surveys/create.html', {'form': SurveyAddForm})
 
 @login_required()
+@require_owner(Survey, 'survey_id')
 def survey_detail(request, survey_id):
     survey = get_object_or_404(Survey, pk=survey_id)
     polls = Poll.objects.filter(survey=survey)

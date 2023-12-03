@@ -10,7 +10,6 @@ urlpatterns = [
     path("add-poll/<int:survey_id>/", views.polls_add, name="add_poll"),
     path('delete/<int:poll_id>', views.poll_delete, name="delete_poll"),
     path("edit/<int:poll_id>/", views.polls_edit, name="edit_poll"),
-    path('result/<int:poll_id>/', views.poll_result, name='result_poll'),
     path('add-choice/<int:poll_id>/', views.create_choice, name='add_choice'),
     path('add-choice-clone/<int:poll_id>/', views.choice_protocol,  name="protocol_choice"),
     path('detail/choices/<int:poll_id>/', views.choices_list, name="list_choice"),
@@ -23,4 +22,9 @@ urlpatterns = [
     path('vote/submit_choice/<int:poll_id>/', views.submit_choice, name="submit_choice"),
     path('vote-edit/page/<int:vote_id>', views.vote_reset, name="reset_vote"),
     path('vote-edit/scroll/<int:survey_id>', views.scroll_reset, name="scroll_reset"),
+
+    # Charts URLS
+    path('result/<int:poll_id>/', views.poll_result, name='result_poll'),
+    path('result-sex/<int:poll_id>/', views.poll_sex, name='result_sex'),
+    path('results-sex-table/<int:poll_id>', views.sex_table, name='table_sex'),
 ]
