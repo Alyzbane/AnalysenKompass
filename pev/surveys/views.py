@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.views import generic
 
@@ -56,8 +56,6 @@ def survey_detail(request, survey_id):
     }
     return render(request, 'surveys/detail.html', context)
 
-
-
 @login_required
 @require_owner(Survey, 'survey_id')
 def survey_edit(request, survey_id):
@@ -69,7 +67,13 @@ def survey_edit(request, survey_id):
             return redirect('surveys:survey_detail', survey_id=survey.pk)
     else:
         form = SurveyAddForm(instance=survey)
-        return render(request, 'surveys/edit.html', {'form': form})
+
+        context = {
+            'form': form,
+            'survey': survey,
+        }
+
+        return render(request, 'surveys/edit.html', context)
 
 
 @login_required

@@ -59,7 +59,6 @@ def vote_scroll(request, survey_id):
     is_active = survey.active
     is_survey_completed= Vote.survey_complete(request.user, survey_id)
 
-
     context = {
       'survey': survey,
       'polls': polls,

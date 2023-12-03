@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 class Survey(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(max_length=255)
-    active = models.BooleanField(default=True)
+    active = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)

@@ -15,7 +15,7 @@
             </ul>
             
             {% if request.user == survey.owner %}
-            {% if survey.active %}
+            {% if not survey.active %}
             <a class="btn btn-primary mt-3" href="{% url 'polls:add_poll' survey.pk %}" role="button">Create Poll</a>
             {% endif %}
             <a class="btn btn-primary mt-3" href="{% url 'surveys:survey_results' survey.pk %}" role="button">View Result</a>

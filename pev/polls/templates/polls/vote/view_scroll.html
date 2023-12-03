@@ -1,5 +1,4 @@
 {% extends 'view_mode.html' %} {% block content %}
-
 <div class="container">
 	<form method="post" action="{% url 'polls:submit_choices' %}"> 
 		{% csrf_token %}
@@ -15,8 +14,8 @@
 					<input type="radio" name="poll_{{ poll.id }}" value="{{ choice.id }}"
 					{% for selected_choice in selected_choices %}
 					    {% if selected_choice == choice.id %} checked {% endif %}
-					    {% if selected_choice or not is_active %} disabled {% endif %}
-					{% endfor %} required >
+					    {% if not is_active or selected_choice %} disabled {% endif %}
+					{% endfor %} {% if not is_active %} disabled {% endif %} required >
 					{{ choice.text }}
 				</label>
 				<br />
@@ -34,9 +33,9 @@
 			{% include 'polls/partials/survey_complete.html' %}
 		{% endif %}
 
-		{% if not is_valid %}
+		{% if not is_valid and survey.active %}
 		    <button type="submit" class="btn btn-success align-self-end">Submit All</button>
-	    {% else %}
+	    {% elif survey.active %}
 		    <a class="btn btn-secondary align-self-end" href="{% url 'polls:scroll_reset' survey.pk %}" role="button"}>Reset</a>
 		{% endif %}
 		{% if survey.owner == request.user %}

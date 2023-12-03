@@ -8,9 +8,9 @@ from surveys.models import Survey
 from datetime import date, timedelta
 
 class Vote(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    survey = models.ForeignKey(Survey, on_delete=models.CASCADE)
-    poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    survey = models.ForeignKey(Survey, on_delete=models.SET_NULL, null=True)
+    poll = models.ForeignKey(Poll, on_delete=models.SET_NULL, null=True)
     choice = models.ForeignKey(Choice, on_delete=models.SET_NULL, null=True)
     original_choice_text = models.CharField(max_length=255, blank=True, editable=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -83,4 +83,4 @@ class Vote(models.Model):
         return self.user == user
 
     def __str__(self):
-        return f'{self.poll.text[:15]} - {self.original_choice_text[:15]} - {self.user.username}'
+        return f'{self.original_choice_text[:15]}'

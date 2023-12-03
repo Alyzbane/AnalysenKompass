@@ -4,6 +4,9 @@
             <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
+                <strong>
+                    <p class="text-danger">Active Survey will be uneditable or locked </p>
+                </strong>
                 <button type="submit" class="btn btn-success">{{ button_text }}</button>
                 <a role="button" href="{% url 'surveys:survey_index' %}" class="btn btn-primary">Back</a>
             </form>

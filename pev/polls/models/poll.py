@@ -12,8 +12,6 @@ class Poll(models.Model):
     updated_at = models.DateTimeField(auto_now=True) 
     created_at = models.DateTimeField(auto_now_add=True)
 
-    
-    
     ### Start of navigation data helper
     ### Defines the data for navigation in the polls/partials/navigation.html
     @classmethod
@@ -49,25 +47,6 @@ class Poll(models.Model):
     @property
     def get_vote_count(self):
         return self.vote_set.count()
-
-    def get_result_dict(self):
-        res = []
-        for choice in self.choice_set.all():
-            d = {}
-            alert_class = ['primary', 'secondary', 'success',
-                           'danger', 'dark', 'warning', 'info']
-
-            d['alert_class'] = secrets.choice(alert_class)
-            d['text'] = choice.text
-            d['num_votes'] = choice.get_vote_count
-            if not self.get_vote_count:
-                d['percentage'] = 0
-            else:
-                d['percentage'] = (choice.get_vote_count /
-                                   self.get_vote_count)*100
-
-            res.append(d)
-        return res
 
     def __str__(self):
        return self.text
