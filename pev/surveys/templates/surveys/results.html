@@ -16,8 +16,9 @@
     <h2> {{ survey.title }} </h2>
     <p> {{ survey.description }} </p>
     {% for poll in polls %}
-        <div id="poll-chart" hx-get="{% url 'polls:result_sex' poll.pk %}" hx-trigger="load"></div>
-        <div id="poll-chart" hx-get="{% url 'polls:table_sex' poll.pk %}" hx-trigger="load"></div> 
+        <div id="poll-table" hx-get="{% url 'polls:table_result' poll.pk %}" hx-trigger="load"></div>
+        <div id="sex-chart" hx-get="{% url 'polls:result_sex' poll.pk %}" hx-trigger="load"></div>
+        <div id="sex-table" hx-get="{% url 'polls:table_sex' poll.pk %}" hx-trigger="load"></div> 
     {% endfor %}
     </div>
 </ul>

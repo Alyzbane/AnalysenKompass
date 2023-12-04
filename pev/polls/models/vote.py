@@ -1,11 +1,11 @@
+from datetime import date, timedelta
 from django.db import models
 from django.db.models import Count, Q
 from django.contrib.auth.models import User
-from . import Poll, Choice
 
 from surveys.models import Survey
+from . import Poll, Choice
 
-from datetime import date, timedelta
 
 class Vote(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
@@ -73,7 +73,7 @@ class Vote(models.Model):
         polls = Poll.objects.filter(survey_id=survey_id)
         user_votes = cls.objects.filter(user=user, poll__in=polls)
         return polls.count() == user_votes.count()
-    
+
     # override the save method for original choice
     def save(self, *args, **kwargs):
         if not self.original_choice_text:

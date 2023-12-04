@@ -1,13 +1,11 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_GET
 from django.http import HttpResponse
-from django.utils.html import format_html
 
 from plotly.offline import plot
-from plotly.subplots import make_subplots
-import pandas as pd
 import plotly.graph_objs as go
-
+import pandas as pd
 from polls.models import Poll, Vote
 
 def poll_detail(request, poll_id):
@@ -21,7 +19,9 @@ def poll_detail(request, poll_id):
     return render(request, 'polls/poll/detail.html', context)
 
     
+### Chart Functions Displays
 @login_required
+@require_GET
 def poll_result(request, poll_id):
     poll = get_object_or_404(Poll, pk=poll_id)
    
@@ -51,11 +51,11 @@ def poll_result(request, poll_id):
 
 
 @login_required
+@require_GET
 def poll_sex(request, poll_id):
     poll = get_object_or_404(Poll, pk=poll_id)
    
     # Define the raw datas for display
-    # todo: add a filtering or additional template for charts
     male_votes = Vote.get_plot_dict(poll_id, sex='M')
     female_votes = Vote.get_plot_dict(poll_id, sex='F')
 
@@ -86,7 +86,40 @@ def poll_sex(request, poll_id):
     return HttpResponse(chart)
 
 @login_required
+@require_GET
+def poll_age(request, poll_id):
+    poll = get_object_or_404(Poll, pk=poll_id)
+
+    # Define the raw datas for display
+    # todo: add a filtering or additional template for charts
+    votes_data = Vote.get_plot_dict(poll_id)
+    labels, data = zip(*votes_data)
+   
+    # Define the data in othe chart
+    fig = go.Figure(
+        data=[go.Bar(x=labels, y=data)],
+        layout_title_text=poll.text,
+    )
+
+    fig.update_yaxes(tickformat=",d", dtick=1)
+
+    chart = plot(
+        fig,
+        output_type='div',
+        include_plotlyjs=False,
+        show_link=False,
+        link_text="",
+     ) 
+
+    return HttpResponse(chart)
+
+
+
+### Table Functions Displays
+@login_required
+@require_GET
 def sex_table(request, poll_id):
+    poll = get_object_or_404(Poll, pk=poll_id)
     # Define the raw datas for display
     male_votes = Vote.get_plot_dict(poll_id, sex='M')
     female_votes = Vote.get_plot_dict(poll_id, sex='F')
@@ -121,7 +154,7 @@ def sex_table(request, poll_id):
             height=24
         )
     )])
-
+    table = table.update_layout(title_text=poll.text)
     # Convert the figure to a div string and return it
     table_div = plot(table,
                       output_type='div',
@@ -129,31 +162,41 @@ def sex_table(request, poll_id):
 
     return HttpResponse(table_div)
 
-
-
 @login_required
-def poll_age(request, poll_id):
+@require_GET
+def result_table(request, poll_id):
     poll = get_object_or_404(Poll, pk=poll_id)
-
+   
     # Define the raw datas for display
-    # todo: add a filtering or additional template for charts
     votes_data = Vote.get_plot_dict(poll_id)
     labels, data = zip(*votes_data)
-   
-    # Define the data in othe chart
-    fig = go.Figure(
-        data=[go.Bar(x=labels, y=data)],
-        layout_title_text=poll.text,
-    )
 
-    fig.update_yaxes(tickformat=",d", dtick=1)
+    vote_df = pd.DataFrame({'Choice': labels, 'Frequency': data})
 
-    chart = plot(
-        fig,
-        output_type='div',
-        include_plotlyjs=False,
-        show_link=False,
-        link_text="",
-     ) 
+    vote_stats = vote_df.describe()
 
-    return HttpResponse(chart)
+    # Create Plotly Table for male and female statistics
+    table = go.Figure(data=[go.Table(
+        header=dict(
+            values=['Statistic', 'Data'],
+            font=dict(size=16),
+            align="left",
+            height=32
+        ),
+        cells=dict(
+            values=[
+                vote_stats.index,  # statistics names
+                vote_stats['Frequency']  # female statistics
+            ],
+            font=dict(size=12),
+            align=["left", "right"],
+            height=24
+        )
+    )])
+    table = table.update_layout(title_text=poll.text)
+    # Convert the figure to a div string and return it
+    table_div = plot(table,
+                      output_type='div',
+                      link_text="")
+
+    return HttpResponse(table_div)
