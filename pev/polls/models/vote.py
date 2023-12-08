@@ -73,7 +73,7 @@ class Vote(models.Model):
         polls = Poll.objects.filter(survey_id=survey_id)
         user_votes = cls.objects.filter(user=user, poll__in=polls)
         return polls.count() == user_votes.count()
-
+   
     # override the save method for original choice
     def save(self, *args, **kwargs):
         if not self.original_choice_text:

@@ -6,22 +6,46 @@
 
 
 <div class="container-fluid">
-<div class="d-flex justify-content-end">
-    <a role="button" href={% url 'surveys:survey_detail' survey.pk %} class="btn btn-secondary">Back</a>
-</div>
-
-
-<ul>
-    <div class="form-container">
-    <h2> {{ survey.title }} </h2>
-    <p> {{ survey.description }} </p>
-    {% for poll in polls %}
-        <div id="poll-table" hx-get="{% url 'polls:table_result' poll.pk %}" hx-trigger="load"></div>
-        <div id="sex-chart" hx-get="{% url 'polls:result_sex' poll.pk %}" hx-trigger="load"></div>
-        <div id="sex-table" hx-get="{% url 'polls:table_sex' poll.pk %}" hx-trigger="load"></div> 
-    {% endfor %}
+   
+    <div class="card">
+        <div class="card-body">
+           <div class="d-flex justify-content-between">
+            <div>
+           <h5 class="card-title">{{ survey.title }}</h5>
+           <p> {{ survey.description }} </p>
+            </div>
+           <a role="button" href={% url 'surveys:survey_detail' survey.pk %} class="btn btn-secondary">Back</a>
+            </div>
+      </div>
     </div>
-</ul>
+    <br> 
+        <div class="form-container ">
+           {% for poll in polls %}
+           <div class="card">
+            <div class="card-body">
+                <h2>{{ poll.text }}</h2>
+                <hr>
+                <h5>Tables</h5>
+                <hr>
+                <div id="poll-table" hx-get="{% url 'polls:table_result' poll.pk %}" hx-trigger="load">
+                    <img alt="Loading..." class="htmx-indicator" width="150" src="{% static 'img/bars.svg' %}"/>
+                </div>
+                <div id="sex-table" hx-get="{% url 'polls:table_sex' poll.pk %}" hx-trigger="load">
+                    <img alt="Loading..." class="htmx-indicator" width="150" src="{% static 'img/bars.svg' %}"/>
+                </div> 
+                <hr>
+                <h5>Graphs</h5>
+                <hr>
+                <div id="poll-chart" hx-get="{% url 'polls:result_poll' poll.pk %}" hx-trigger="load">
+                    <img alt="Loading..." class="htmx-indicator" width="150" src="{% static 'img/bars.svg' %}"/>
+                </div>
+                <div id="sex-chart" hx-get="{% url 'polls:result_sex' poll.pk %}" hx-trigger="load">
+                    <img alt="Loading..." class="htmx-indicator" width="150" src="{% static 'img/bars.svg' %}"/>
+                </div>
+                <hr>
+            </div>
+           </div>
+           {% endfor %}
+        </div>
 </div>
-
 {% endblock %}

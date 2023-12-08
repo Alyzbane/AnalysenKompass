@@ -33,11 +33,15 @@ def poll_result(request, poll_id):
     # Define the data in othe chart
     fig = go.Figure(
         data=[go.Bar(x=labels, y=data)],
-        layout_title_text=poll.text,
+        layout_title_text="Whole Data Graph",
     )
 
     fig.update_yaxes(tickformat=",d", dtick=1)
-
+    fig.update_layout(
+        autosize=False,
+        yaxis_title="Choice",
+        xaxis_title="Frequency",
+    )
 
     chart = plot(
         fig,
@@ -70,9 +74,10 @@ def poll_sex(request, poll_id):
     fig.update_yaxes(tickformat=",d", dtick=1)
 
     fig.update_layout(
-        title_text = poll.text,
+        title_text = "Sex Data Graph",
         xaxis_title="Choice",
         yaxis_title="Frequency",
+        autosize=False,
     )
 
     chart = plot(
@@ -82,34 +87,6 @@ def poll_sex(request, poll_id):
         show_link=False,
         link_text="",
      )
-
-    return HttpResponse(chart)
-
-@login_required
-@require_GET
-def poll_age(request, poll_id):
-    poll = get_object_or_404(Poll, pk=poll_id)
-
-    # Define the raw datas for display
-    # todo: add a filtering or additional template for charts
-    votes_data = Vote.get_plot_dict(poll_id)
-    labels, data = zip(*votes_data)
-   
-    # Define the data in othe chart
-    fig = go.Figure(
-        data=[go.Bar(x=labels, y=data)],
-        layout_title_text=poll.text,
-    )
-
-    fig.update_yaxes(tickformat=",d", dtick=1)
-
-    chart = plot(
-        fig,
-        output_type='div',
-        include_plotlyjs=False,
-        show_link=False,
-        link_text="",
-     ) 
 
     return HttpResponse(chart)
 
@@ -154,7 +131,9 @@ def sex_table(request, poll_id):
             height=24
         )
     )])
-    table = table.update_layout(title_text=poll.text)
+    table = table.update_layout(
+        title_text=f"Sex Data Summary",
+        autosize=False,)
     # Convert the figure to a div string and return it
     table_div = plot(table,
                       output_type='div',
@@ -193,10 +172,41 @@ def result_table(request, poll_id):
             height=24
         )
     )])
-    table = table.update_layout(title_text=poll.text)
+    table = table.update_layout(
+        autosize=False,
+        title_text=f"Whole Data Summary")
     # Convert the figure to a div string and return it
     table_div = plot(table,
                       output_type='div',
                       link_text="")
 
     return HttpResponse(table_div)
+
+
+@login_required
+def age_group_boxplot(request, poll_id):
+    # Define age groups
+    age_groups = {
+        'Young Adult': range(18, 25),
+        'Adult': range(25, 50),
+        'Senior': range(50, 120)
+    }
+
+    # Create a DataFrame to store the data
+    df = pd.DataFrame(columns=['group', 'votes'])
+
+    for group, ages in age_groups.items():
+        # Get vote counts for each choice
+        votes = Vote.get_plot_dict(poll_id, min_age=min(ages), max_age=max(ages))
+        for label, freq in votes:
+            temp_df = pd.DataFrame({'group': [group]*freq, 'votes': range(freq)})
+            df = pd.concat([df, temp_df], ignore_index=True)
+
+    # Create a box plot of the vote counts for each age group
+    data = [go.Box(y=df[df['group'] == group]['votes'], name=group) for group in age_groups.keys()]
+    layout = go.Layout(title='Vote Counts by Age Group', xaxis=dict(title='Age Group'), yaxis=dict(title='Votes'))
+    fig = go.Figure(data=data, layout=layout)
+
+    # Convert the figure to a div string and return it
+    div_string = plot(fig, output_type='div')
+    return HttpResponse(div_string)
