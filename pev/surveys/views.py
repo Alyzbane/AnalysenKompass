@@ -63,11 +63,15 @@ def survey_detail(request, survey_id):
     survey = get_object_or_404(Survey, pk=survey_id)
     polls = Poll.objects.filter(survey=survey)
     survey_has_votes = survey.has_votes()
+    shared_url = request.build_absolute_uri(reverse('polls:start_vote', args={survey_id}))
+
     context = {
         'survey': survey,
         'polls': polls,
         'survey_has_votes': survey_has_votes,
+        'shared_url': shared_url,
     }
+
     return render(request, 'surveys/detail.html', context)
 
 @login_required
