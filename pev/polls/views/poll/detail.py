@@ -38,7 +38,7 @@ def poll_result(request, poll_id):
 
     fig.update_yaxes(tickformat=",d", dtick=1)
     fig.update_layout(
-        autosize=False,
+        autosize=True,
         yaxis_title="Choice",
         xaxis_title="Frequency",
         yaxis=dict(tickmode='auto'),
@@ -78,7 +78,7 @@ def poll_sex(request, poll_id):
         title_text = "Sex Data Graph",
         xaxis_title="Choice",
         yaxis_title="Frequency",
-        autosize=False,
+        autosize=True,
         yaxis=dict(tickmode='auto'),
     )
 
@@ -135,7 +135,7 @@ def sex_table(request, poll_id):
     )])
     table = table.update_layout(
         title_text=f"Sex Data Summary",
-        autosize=False,)
+        autosize=True,)
     # Convert the figure to a div string and return it
     table_div = plot(table,
                       output_type='div',
@@ -175,7 +175,7 @@ def result_table(request, poll_id):
         )
     )])
     table = table.update_layout(
-        autosize=False,
+        autosize=True,
         title_text=f"Whole Data Summary",)
     # Convert the figure to a div string and return it
     table_div = plot(table,
@@ -225,7 +225,7 @@ def poll_total_percent(request, poll_id):
         )
     )])
     table = table.update_layout(
-        autosize=False,
+        autosize=True,
         title_text="Whole Data Summary",)
     # Convert the figure to a div string and return it
     table_div = plot(table,
@@ -279,7 +279,7 @@ def male_percent(request, poll_id):
     )])
     table = table.update_layout(
         title_text=f"Male Data Percent",
-        autosize=False,)
+        autosize=True,)
     # Convert the figure to a div string and return it
     table_div = plot(table,
                       output_type='div',
@@ -333,7 +333,7 @@ def female_percent(request, poll_id):
     )])
     table = table.update_layout(
         title_text=f"Female Data Percent",
-        autosize=False,)
+        autosize=True,)
     # Convert the figure to a div string and return it
     table_div = plot(table,
                       output_type='div',
