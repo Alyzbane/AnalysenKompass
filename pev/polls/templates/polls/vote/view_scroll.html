@@ -4,7 +4,11 @@
 		{% csrf_token %}
 
 		{% for poll in polls %}
+		  <br>
+		  <div class="card">
+    	    <div class="card-body">
 		<h2>{{ poll.text }}</h2>
+		<hr>
 		{% for key, choice_sets in choices.items %}
 		{% if poll.id == key %}
 		<div class="row">
@@ -27,6 +31,8 @@
 		<input type="hidden" name="poll_ids[]" value="{{ poll.id }}" />
 		<br />
 		<br />
+			</div>
+		  </div>
 		{% endfor %}
 		<div class="container-fluid">
 		{% if is_survey_completed %}

@@ -1,5 +1,13 @@
 User Data Login
 
+Users: 
+1.)
+username: alyzbane
+pass: testing
+2.)
+username: princedm
+pass: testing
+
 ===================User:===================
 Username: ‘john’
 Email: ‘john@example.com’

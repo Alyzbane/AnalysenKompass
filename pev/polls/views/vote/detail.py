@@ -7,6 +7,9 @@ from surveys.models import Survey
 @login_required
 def vote_start(request, survey_id):
     survey = get_object_or_404(Survey, pk=survey_id)
+    if not survey.active:
+        return render(request, 'polls/vote/end.html')
+
     first_poll = Poll.objects.filter(survey=survey).first()
 
     context = {
