@@ -52,11 +52,17 @@
                 <hr>
                 <h5>Graphs</h5>
                 <hr>
+                <div class="row">
+                    <div class="col-md-6">
                 <div id="poll-chart" hx-get="{% url 'polls:result_poll' poll.pk %}" hx-trigger="load">
                     <img alt="Loading..." class="htmx-indicator" width="150" src="{% static 'img/bars.svg' %}"/>
                 </div>
+                    </div>
+                    <div class="col-md-6">
                 <div id="sex-chart" hx-get="{% url 'polls:result_sex' poll.pk %}" hx-trigger="load">
                     <img alt="Loading..." class="htmx-indicator" width="150" src="{% static 'img/bars.svg' %}"/>
+                </div>
+                    </div>
                 </div>
                 <hr>
             </div>

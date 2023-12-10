@@ -41,6 +41,7 @@ def poll_result(request, poll_id):
         autosize=False,
         yaxis_title="Choice",
         xaxis_title="Frequency",
+        yaxis=dict(tickmode='auto'),
     )
 
     chart = plot(
@@ -78,6 +79,7 @@ def poll_sex(request, poll_id):
         xaxis_title="Choice",
         yaxis_title="Frequency",
         autosize=False,
+        yaxis=dict(tickmode='auto'),
     )
 
     chart = plot(
@@ -224,6 +226,15 @@ def poll_total_percent(request, poll_id):
     total_responses = vote_df['frequency'].sum()
     vote_df['valid_percent'] = (vote_df['frequency'] / total_responses) * 100
 
+    # Add a row for the total
+    total_row = pd.DataFrame({
+        'choice': ['Total'],
+        'frequency': [total_responses],
+        'valid_percent': [100.0]  # Assuming 100% for the total
+    })
+
+    vote_df = pd.concat([vote_df, total_row], ignore_index=True)
+    
     # Create Plotly Table for male and female statistics
     table = go.Figure(data=[go.Table(
         header=dict(
@@ -268,6 +279,15 @@ def male_percent(request, poll_id):
     male_total_response = male_df['frequency'].sum()
     male_df['valid_percent'] = (male_df['frequency'] / male_total_response) * 100
 
+     # Add a row for the total
+    total_row = pd.DataFrame({
+        'choice': ['Total'],
+        'frequency': [male_total_response],
+        'valid_percent': [100.0]  # Assuming 100% for the total
+    })
+
+    male_df = pd.concat([male_df, total_row], ignore_index=True)
+
     # Create Plotly Table for male and female statistics
     table = go.Figure(data=[go.Table(
         header=dict(
@@ -311,6 +331,16 @@ def female_percent(request, poll_id):
     # Calculate percent value for male and female data
     female_total_response = female_df['frequency'].sum()
     female_df['valid_percent'] = (female_df['frequency'] / female_total_response) * 100
+
+     # Add a row for the total
+    total_row = pd.DataFrame({
+        'choice': ['Total'],
+        'frequency': [female_total_response],
+        'valid_percent': [100.0]  # Assuming 100% for the total
+    })
+
+    female_df = pd.concat([female_df, total_row], ignore_index=True)
+
 
     # Create Plotly Table for male and female statistics
     table = go.Figure(data=[go.Table(
