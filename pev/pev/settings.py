@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     # External applications
-    'django_seed',
+#    'django_seed',
 
 
     # my apps
