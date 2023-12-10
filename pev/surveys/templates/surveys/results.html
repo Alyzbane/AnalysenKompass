@@ -33,6 +33,9 @@
                 <div id="sex-table" hx-get="{% url 'polls:table_sex' poll.pk %}" hx-trigger="load">
                     <img alt="Loading..." class="htmx-indicator" width="150" src="{% static 'img/bars.svg' %}"/>
                 </div> 
+                <div id="poll-percent-table" hx-get="{% url 'polls:percent_poll' poll.pk %}" hx-trigger="load">
+                    <img alt="Loading..." class="htmx-indicator" width="150" src="{% static 'img/bars.svg' %}"/>
+                </div> 
                 <hr>
                 <h5>Graphs</h5>
                 <hr>

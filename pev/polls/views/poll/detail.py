@@ -174,7 +174,7 @@ def result_table(request, poll_id):
     )])
     table = table.update_layout(
         autosize=False,
-        title_text=f"Whole Data Summary")
+        title_text=f"Whole Data Summary",)
     # Convert the figure to a div string and return it
     table_div = plot(table,
                       output_type='div',
@@ -210,3 +210,46 @@ def age_group_boxplot(request, poll_id):
     # Convert the figure to a div string and return it
     div_string = plot(fig, output_type='div')
     return HttpResponse(div_string)
+
+
+## Valid Percent
+@login_required
+@require_GET
+def poll_total_percent(request, poll_id):
+    votes_data = Vote.get_plot_dict(poll_id)
+    labels, data = zip(*votes_data)
+
+    vote_df = pd.DataFrame({'choice': labels, 'frequency': data})
+
+    total_responses = vote_df['frequency'].sum()
+    vote_df['valid_percent'] = (vote_df['frequency'] / total_responses) * 100
+
+    # Create Plotly Table for male and female statistics
+    table = go.Figure(data=[go.Table(
+        header=dict(
+            values=['', 'N', 'Valid Percent'],
+            font=dict(size=16),
+            align="left",
+            height=32
+        ),
+        cells=dict(
+            values=[
+                vote_df['choice'],
+                vote_df['frequency'],
+                vote_df['valid_percent'],
+            ],
+            font=dict(size=12),
+            align=["left", "right"],
+            height=24
+        )
+    )])
+    table = table.update_layout(
+        autosize=False,
+        title_text="Whole Data Summary",)
+    # Convert the figure to a div string and return it
+    table_div = plot(table,
+                      output_type='div',
+                      link_text="")
+
+    return HttpResponse(table_div)
+

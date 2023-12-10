@@ -26,6 +26,12 @@ urlpatterns = [
     # Charts URLS
     path('result/<int:poll_id>/', views.poll_result, name='result_poll'),
     path('result-sex/<int:poll_id>/', views.poll_sex, name='result_sex'),
+
+    # Table URLS
     path('results-sex-table/<int:poll_id>', views.sex_table, name='table_sex'),
     path('results-table/<int:poll_id>', views.result_table, name='table_result'),
+
+    # Percent URLS
+    path('result-percent/<int:poll_id>', views.poll_total_percent, name='percent_poll'),
+    
 ]

@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
+    # External applications
+    "django_seed",
+
     # my apps
     "accounts.apps.AccountsConfig",
     "polls.apps.PollsConfig",
