@@ -32,6 +32,7 @@ urlpatterns = [
     path('results-table/<int:poll_id>', views.result_table, name='table_result'),
 
     # Percent URLS
+    path('result-female-percent/<int:poll_id>', views.male_percent, name='percent_male'),
+    path('result-male-percent/<int:poll_id>', views.female_percent, name='percent_female'),
     path('result-percent/<int:poll_id>', views.poll_total_percent, name='percent_poll'),
-    
 ]

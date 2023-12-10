@@ -253,3 +253,92 @@ def poll_total_percent(request, poll_id):
 
     return HttpResponse(table_div)
 
+## Valid Percent
+@login_required
+@require_GET
+def male_percent(request, poll_id):
+    # Define the raw datas for display
+    male_votes = Vote.get_plot_dict(poll_id, sex='M')
+    male_labels, male_data = zip(*male_votes)
+
+    # Create pandas DataFrames for male and female data
+    male_df = pd.DataFrame({'choice': male_labels, 'frequency': male_data})
+
+    # Calculate percent value for male and female data
+    male_total_response = male_df['frequency'].sum()
+    male_df['valid_percent'] = (male_df['frequency'] / male_total_response) * 100
+
+    # Create Plotly Table for male and female statistics
+    table = go.Figure(data=[go.Table(
+        header=dict(
+            values=['', 'N', 'Valid Percent'],
+            font=dict(size=16),
+            align="left",
+            height=32
+        ),
+        cells=dict(
+            values=[
+                male_df['choice'],
+                male_df['frequency'],
+                male_df['valid_percent'],
+            ],
+            font=dict(size=12),
+            align=["left", "right", "right"],
+            height=24
+        )
+    )])
+    table = table.update_layout(
+        title_text=f"Male Data Percent",
+        autosize=False,)
+    # Convert the figure to a div string and return it
+    table_div = plot(table,
+                      output_type='div',
+                      link_text="")
+
+    return HttpResponse(table_div)
+
+
+@login_required
+@require_GET
+def female_percent(request, poll_id):
+    # Define the raw datas for display
+    female_votes = Vote.get_plot_dict(poll_id, sex='F')
+    female_labels, female_data = zip(*female_votes)
+
+    # Create pandas DataFrames for male and female data
+    female_df = pd.DataFrame({'choice': female_labels, 'frequency': female_data})
+
+    # Calculate percent value for male and female data
+    female_total_response = female_df['frequency'].sum()
+    female_df['valid_percent'] = (female_df['frequency'] / female_total_response) * 100
+
+    # Create Plotly Table for male and female statistics
+    table = go.Figure(data=[go.Table(
+        header=dict(
+            values=['', 'N', 'Valid Percent'],
+            font=dict(size=16),
+            align="left",
+            height=32
+        ),
+        cells=dict(
+            values=[
+                female_df['choice'],
+                female_df['frequency'],
+                female_df['valid_percent'],
+            ],
+            font=dict(size=12),
+            align=["left", "right", "right"],
+            height=24
+        )
+    )])
+    table = table.update_layout(
+        title_text=f"Female Data Percent",
+        autosize=False,)
+    # Convert the figure to a div string and return it
+    table_div = plot(table,
+                      output_type='div',
+                      link_text="")
+
+    return HttpResponse(table_div)
+
+

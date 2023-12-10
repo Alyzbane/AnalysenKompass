@@ -27,15 +27,28 @@
                 <hr>
                 <h5>Tables</h5>
                 <hr>
+                <div class="row">
+                    <div class="col-md-6">
                 <div id="poll-table" hx-get="{% url 'polls:table_result' poll.pk %}" hx-trigger="load">
                     <img alt="Loading..." class="htmx-indicator" width="150" src="{% static 'img/bars.svg' %}"/>
                 </div>
-                <div id="sex-table" hx-get="{% url 'polls:table_sex' poll.pk %}" hx-trigger="load">
-                    <img alt="Loading..." class="htmx-indicator" width="150" src="{% static 'img/bars.svg' %}"/>
-                </div> 
                 <div id="poll-percent-table" hx-get="{% url 'polls:percent_poll' poll.pk %}" hx-trigger="load">
                     <img alt="Loading..." class="htmx-indicator" width="150" src="{% static 'img/bars.svg' %}"/>
                 </div> 
+                    </div>
+                    <div class="col-md-6">
+                <div id="sex-table" hx-get="{% url 'polls:table_sex' poll.pk %}" hx-trigger="load">
+                    <img alt="Loading..." class="htmx-indicator" width="150" src="{% static 'img/bars.svg' %}"/>
+                </div> 
+
+                <div id="male-percent-table" hx-get="{% url 'polls:percent_male' poll.pk %}" hx-trigger="load">
+                    <img alt="Loading..." class="htmx-indicator" width="150" src="{% static 'img/bars.svg' %}"/>
+                </div> 
+                <div id="female-percent-table" hx-get="{% url 'polls:percent_female' poll.pk %}" hx-trigger="load">
+                    <img alt="Loading..." class="htmx-indicator" width="150" src="{% static 'img/bars.svg' %}"/>
+                </div> 
+                    </div>
+                </div>
                 <hr>
                 <h5>Graphs</h5>
                 <hr>
