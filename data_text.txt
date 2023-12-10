@@ -1,0 +1,36 @@
+User Data Login
+
+===================User:===================
+Username: ‘john’
+Email: ‘john@example.com’
+Password: ‘password’
+Sex: ‘M’
+
+===================Survey:===================
+Title: ‘AI Adoption in Commercial Industry’
+Description: ‘A survey to understand the adoption of AI in the commercial industry.’
+
+===================Polls:====================
+Text: ‘Is your organization currently using AI?’
+Text: ‘What are the main challenges your organization faces in adopting AI?’
+Text: ‘How has AI impacted your organization?’
+Text: Are you confident that AI will not replace you in your job?
+
+===================Choices:===================
+===================For Poll 1:===================
+Text: ‘Yes’
+Text: ‘No’
+
+===================For Poll 2:===================
+Text: ‘Lack of skilled staff’
+Text: ‘High implementation costs’
+Text: ‘Data privacy concerns’
+
+===================For Poll 3:===================
+Text: ‘Increased efficiency’
+Text: ‘Improved decision-making’
+Text: ‘No significant impact’
+
+===================For Poll 4:===================
+Text: ‘Yes’
+Text: ‘No’
