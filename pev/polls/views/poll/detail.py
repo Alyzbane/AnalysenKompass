@@ -184,36 +184,6 @@ def result_table(request, poll_id):
 
     return HttpResponse(table_div)
 
-
-@login_required
-def age_group_boxplot(request, poll_id):
-    # Define age groups
-    age_groups = {
-        'Young Adult': range(18, 25),
-        'Adult': range(25, 50),
-        'Senior': range(50, 120)
-    }
-
-    # Create a DataFrame to store the data
-    df = pd.DataFrame(columns=['group', 'votes'])
-
-    for group, ages in age_groups.items():
-        # Get vote counts for each choice
-        votes = Vote.get_plot_dict(poll_id, min_age=min(ages), max_age=max(ages))
-        for label, freq in votes:
-            temp_df = pd.DataFrame({'group': [group]*freq, 'votes': range(freq)})
-            df = pd.concat([df, temp_df], ignore_index=True)
-
-    # Create a box plot of the vote counts for each age group
-    data = [go.Box(y=df[df['group'] == group]['votes'], name=group) for group in age_groups.keys()]
-    layout = go.Layout(title='Vote Counts by Age Group', xaxis=dict(title='Age Group'), yaxis=dict(title='Votes'))
-    fig = go.Figure(data=data, layout=layout)
-
-    # Convert the figure to a div string and return it
-    div_string = plot(fig, output_type='div')
-    return HttpResponse(div_string)
-
-
 ## Valid Percent
 @login_required
 @require_GET

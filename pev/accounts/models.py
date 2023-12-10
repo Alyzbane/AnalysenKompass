@@ -9,7 +9,6 @@ class Profile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     sex = models.CharField(max_length=1, choices=SEX_CHOICES)
-    birthdate = models.DateField()
     is_active = models.BooleanField(default=True)
     
     def __str__(self):

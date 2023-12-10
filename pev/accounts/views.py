@@ -45,7 +45,6 @@ def create_user(request):
             password2 = form.cleaned_data['password2']
             email = form.cleaned_data['email']
             sex = form.cleaned_data['sex']
-            birthdate = form.cleaned_data['birthdate']
 
             if password1 != password2:
                 check1 = True
@@ -68,7 +67,7 @@ def create_user(request):
             else:
                 user = User.objects.create_user(
                     username=username, password=password1, email=email)
-                profile = Profile(user=user, sex=sex, birthdate=birthdate)
+                profile = Profile(user=user, sex=sex)
                 profile.save()
                 messages.success(request, f'Thanks for registering {user.username}.', extra_tags='alert alert-success alert-dismissible fade show')
                 return redirect('accounts:login')

@@ -15,18 +15,16 @@ class UserRegistrationForm(forms.Form):
                                 widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     # Profile fields
     sex = forms.ChoiceField(choices=Profile.SEX_CHOICES, widget=forms.RadioSelect)
-    birthdate = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}))
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2', 'sex', 'birthdate']
+        fields = ['username', 'email', 'password1', 'password2', 'sex']
 
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['sex', 'birthdate', 'is_active']
+        fields = ['sex', 'is_active']
         widgets = {
             'sex': forms.Select(attrs={'class': 'form-control'}),
-            'birthdate': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
 #            'sex': forms.RadioSelect(choices=Profile.SEX_CHOICES),
         }
