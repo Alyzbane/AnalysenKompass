@@ -1,29 +1,52 @@
 # PEV
 Poll System Evaluation
 
-<h2>Requirements</h2><br />
-<b>Prioritiy High to Low</b>
-<ul>
-<li>Data Consolidation<br>
-- Dashboard Layout per survey<br>
-- <strike>Data filtering modules</strike> <br/>
-- Charts  
-  <ul>
-     <li>Filtered charts</li>
-    <li>Statistics</li>
-  </ul>
-</li>
-<li>Privilege owner acount</li>
-<li>User can only answer the survey</li>
 
+## Clone the Repository
+Clone and navigate to the project directory:
 
-</ul>
-<hr>
-<h2>Addon Features?</h2>
-<hr>
-<ul>
-<strike><li>Vote Scroll View</li></strike>
-- <strike>Reset Vote</strike>
-<li>Soft Delete</li>
-<li>Fix some unnecessary texts in htmls'</li>
-</ul>
+```bash
+https://github.com/Alyzbane/AnalysenKompass.git
+cd AnalysenKompass
+
+```
+
+## Setup and Run
+
+1. Create and activate virtual environment:
+```bash
+python -m venv venv
+.\venv\Scripts\activate
+```
+
+2. Install requirements:
+```bash
+pip install -r requirements.txt
+```
+
+## Running the Project
+
+Run these commands manually:
+```bash
+cd pev
+python manage.py migrate
+python manage.py runserver
+```
+
+## Admin Access
+
+Create a superuser account:
+```bash
+python manage.py createsuperuser
+```
+
+Then access the admin panel at: `http://127.0.0.1:8000/admin`
+
+## Database
+
+SQLite database file is located at `db.sqlite3`. No additional configuration needed - it's created automatically when you run migrations.
+
+## Common URLs
+
+- Homepage: `http://127.0.0.1:8000/`
+- Admin Panel: `http://127.0.0.1:8000/admin`
